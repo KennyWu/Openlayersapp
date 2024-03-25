@@ -1,6 +1,11 @@
 @import "node_modules/ol/ol.css";
 
-html, body {
+:root {
+  --pop-up-width: 200px;
+}
+
+html,
+body {
   margin: 0;
   height: 100%;
 }
@@ -9,4 +14,66 @@ html, body {
   top: 0;
   bottom: 0;
   width: 100%;
+}
+
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: calc(-1 * (var(--pop-up-width) / 2));
+  min-width: var(--pop-up-width);
+}
+
+.pop-info {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.ol-popup:after,
+.ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: calc(var(--pop-up-width) / 2);
+  margin-left: -10px;
+}
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: calc(var(--pop-up-width) / 2);
+  margin-left: -11px;
+}
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+.ol-popup-closer:after {
+  content: "✖";
+}
+
+.legend {
+  min-height: 2rem;
+  min-width: 15rem;
+  margin: 1rem, 1rem, 1rem, 1rem;
+}
+
+.ol-attribution {
+  position: fixed;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+  padding: 0rem, 0rem, 0rem, 0rem;
 }
