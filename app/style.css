@@ -9,11 +9,25 @@ body {
   margin: 0;
   height: 100%;
 }
+
 #map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  position: relative;
+  top: 0rem;
+  bottom: 0rem;
+  height: 100%;
   width: 100%;
+}
+
+#screen {
+  display: flex;
+  border: solid black 5px;
+  width: 100vw;
+  height: 100vh;
+}
+
+#side-panel {
+  border: solid black 5px;
+  width: 15%;
 }
 
 .ol-popup {
@@ -76,4 +90,33 @@ body {
   margin-bottom: 2rem;
   margin-right: 2rem;
   padding: 0rem, 0rem, 0rem, 0rem;
+}
+
+.ol-attribution > ul {
+  transform: rotate(180deg);
+}
+
+.ol-attribution > ul > li > * {
+  transform: rotate(-180deg);
+}
+
+.download {
+  top: 65px;
+  left: 0.5em;
+}
+.ol-touch .download {
+  top: 80px;
+}
+
+.ol-mouse-position {
+  border: solid 1px black;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  font-family: system-ui, "Open Sans", "Helvetica Neue", sans-serif;
+  max-width: 100px;
+  min-width: 100px;
+  min-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

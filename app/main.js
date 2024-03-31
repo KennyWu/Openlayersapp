@@ -9,10 +9,18 @@ import Static from "ol/source/ImageStatic.js";
 import View from "ol/View.js";
 import Overlay from "ol/Overlay";
 import { defaults as defaultControls } from "ol/control.js";
-import Attribution from "ol/control/Attribution";
+import Attribution from "ol/control/Attribution.js";
+import MousePosition from "ol/control/MousePosition.js";
 import TileLayer from "ol/layer/Tile";
 import TileSource from "ol/source/Tile";
 import OSM from "ol/source/OSM";
+import Download from "./Download.js";
+import XYZ from "ol/source/XYZ.js";
+import { createStringXY } from "ol/coordinate";
+
+const featureCollection = "./geo_json/feature_collection.json";
+const dataImgPath = "./data_images/1_dataimage(1).png";
+const currProj = "ESPG:4326";
 
 const extent = [-180, -90, 180, 90];
 const container = document.getElementById("popup");
@@ -48,28 +56,22 @@ function styleBorder(feature) {
 
 let borderDrawings = new VectorLayer({
   source: new VectorSource({
-    url: "http://localhost:5173/feature_collection.json",
+    url: featureCollection,
     format: new GeoJSON(),
   }),
   style: styleBorder,
 });
 
-let mapImage = new ImageLayer({
-  source: new Static({
-    url: "http://localhost:5173/0_background.png",
-    projection: "ESPG:4326",
-    imageExtent: extent,
-  }),
-});
-
 let dataImage = new ImageLayer({
   source: new Static({
-    url: "http://localhost:5173/1_dataimage(1).png",
-    projection: "ESPG:4326",
+    url: dataImgPath,
+    projection: currProj,
     imageExtent: extent,
-    attributions: "<img class='legend' src=/colorbar.png>",
+    attributions:
+      "<div> <img class='legend' src=./legends/colorbar.png> </div>",
   }),
-  opacity: 1,
+  visible: true,
+  opacity: 0.7,
 });
 
 let newAttribution = new Attribution({
@@ -77,9 +79,14 @@ let newAttribution = new Attribution({
   collapsed: false,
 });
 
-// let mapImage = new TileLayer({
-//   source: new OSM(),
-// });
+let mapImage = new TileLayer({
+  source: new OSM({
+    attributions:
+      "<div> &#169; " +
+      '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> ' +
+      "contributors. </div>",
+  }),
+});
 
 const map = new Map({
   layers: [mapImage, dataImage, borderDrawings],
@@ -88,6 +95,13 @@ const map = new Map({
     let control = defaultControls();
     control.pop();
     control.push(newAttribution);
+    control.push(new Download());
+    control.push(
+      new MousePosition({
+        coordinateFormat: createStringXY(1),
+        projection: currProj,
+      })
+    );
     return control;
   })(),
   target: "map",
@@ -95,8 +109,8 @@ const map = new Map({
     projection: "EPSG:4326",
     extent: extent,
     center: [0, 0],
-    zoom: 2,
-    maxZoom: 6,
+    zoom: 2.5,
+    maxZoom: 8,
   }),
 });
 
