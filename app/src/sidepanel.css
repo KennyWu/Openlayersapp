@@ -1,0 +1,77 @@
+.header {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#side-panel {
+  border: 1px black solid;
+  overflow-y: auto;
+}
+
+#content {
+  padding: 1rem 1rem 1rem 1rem;
+  border: solid 1px brown;
+  border-radius: 5px;
+}
+
+.product-layer {
+  border: solid black 1px;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+button {
+  border-style: none;
+  background: none;
+}
+
+button:hover {
+  color: blue;
+}
+
+.dropdown-menu {
+  background-color: lightblue;
+}
+
+.dropdown-item {
+  font-size: 0.8rem;
+}
+
+.dropdown-item:hover {
+  background-color: aqua;
+}
+
+.form-range {
+  margin-left: 0rem;
+  width: 100%;
+}
+
+.layer-options {
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+input[type="range"]::-webkit-slider-track {
+  background-color: gray;
+}
+
+.form-range::-moz-range-track {
+  background-color: gray;
+}
+
+#date {
+  display: flex;
+  justify-content: center;
+}
+
+.month-selector {
+  min-width: 30%;
+  max-width: 40%;
+}
+.day-night-selector {
+  width: 30%;
+}
+
+.year-selector {
+  width: 30%;
+}
