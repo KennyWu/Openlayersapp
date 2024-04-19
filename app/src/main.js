@@ -8,7 +8,7 @@ import MousePosition from "ol/control/MousePosition.js";
 import FullScreen from "ol/control/FullScreen.js";
 import Download from "./Download.js";
 import { loadAndRegisterLayers } from "./ProductLayers.js";
-import initLayers from "./ProductLayers.js";
+import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
 
 const currProj = "ESPG:4326";
@@ -40,13 +40,13 @@ let newAttribution = new Attribution({
 
 function main() {
   map = new Map({
-    layers: initLayers(),
     overlays: [overlay],
     controls: init_controls(),
     target: "map",
     view: view,
   });
-
+  map.setLayers(ProductLayers.initLayers());
+  ProductLayers.regLayerChanges(map);
   registerMapHandlers();
 }
 

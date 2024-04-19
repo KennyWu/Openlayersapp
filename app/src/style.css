@@ -26,12 +26,6 @@ body {
   height: 100vh;
 }
 
-#side-panel {
-  width: 25%;
-  background-color: antiquewhite;
-  padding: 1rem 1rem 1rem 1rem;
-}
-
 .fullscreen:-webkit-full-screen {
   height: 100%;
   margin: 0;

@@ -9,8 +9,6 @@ import OSM from "ol/source/OSM";
 import { fillStringTemplate } from "./util";
 import * as Constants from "./Constants.js";
 
-const featureCollection = "./geo_json/feature_collection.json";
-const dataImgPath = "./data_images/1_dataimage(1).png";
 const CURRPROJ = "ESPG:4326";
 const EXTENT = [-180, -90, 180, 90];
 const LST_BORDER_STYLE = function (feature) {
@@ -35,10 +33,9 @@ const mapImage = new TileLayer({
   zIndex: 0,
 });
 
-function initLayers() {
+export function initLayers() {
   let layers = [mapImage];
   Object.keys(Constants.PRODUCT_LAYERS_ID_MAPPING).forEach((id) => {
-    console.log(id);
     let currLayer = loadAndRegisterLayers(id);
     layers.push(currLayer);
   });
@@ -46,13 +43,46 @@ function initLayers() {
   return layers;
 }
 
+export function regLayerChanges(map) {
+  Object.keys(Constants.PRODUCT_LAYERS_ID_MAPPING).forEach((id, i) => {
+    let productType = document.querySelector(
+      id + " " + Constants.SELECTORS.PRODUCT_LAYER
+    );
+    let dayNight = document.querySelector(
+      id + " " + Constants.SELECTORS.DAY_NIGHT
+    );
+
+    let changeLayers = function (event) {
+      let newLayer = loadAndRegisterLayers(id);
+      map.getLayers().setAt(i + 1, newLayer);
+    };
+
+    productType.addEventListener("change", changeLayers);
+    dayNight.addEventListener("change", changeLayers);
+  });
+
+  let changeAllLayers = function (event) {
+    let layers = initLayers();
+    map.setLayers(layers);
+  };
+
+  let dateTime = document.querySelector(Constants.SELECTORS.DATE);
+  dateTime.addEventListener("change", changeAllLayers);
+}
+
+/**
+ * Load and register event handlers to each layer of product layer 1, 2, and 3
+ * @param {*} pl - the product layer id of the html element
+ * @returns layer object
+ */
 export function loadAndRegisterLayers(pl) {
   let plElements = {};
   Object.values(Constants.SELECTORS).forEach((selector) => {
     if (
       selector === Constants.SELECTORS.OPACITY ||
       selector === Constants.SELECTORS.PRODUCT_LAYER ||
-      selector === Constants.SELECTORS.VISIBLE
+      selector === Constants.SELECTORS.VISIBLE ||
+      selector == Constants.SELECTORS.DAY_NIGHT
     ) {
       plElements[selector] = document.querySelector(pl + " " + selector);
     } else {
@@ -63,19 +93,25 @@ export function loadAndRegisterLayers(pl) {
   const [templateVars, layerVars] = getElementValues(plElements);
   layerVars.zIndex = Constants.PRODUCT_LAYERS_ID_MAPPING[pl];
   let dataURL = fillStringTemplate(Constants.IMAGE_TEMPLATE_URL, templateVars);
+  console.log(dataURL);
   let layer = loadLayer(templateVars.datatype, layerVars, dataURL);
   registerLayer(pl, layer);
   return layer;
 }
 
 function registerLayer(pl, layer) {
+  //We are reregistering event listeners to new
   let visible = document.querySelector(pl + " " + Constants.SELECTORS.VISIBLE);
   let opacity = document.querySelector(pl + " " + Constants.SELECTORS.OPACITY);
-  visible.addEventListener("change", function (event) {
+  const newVisible = visible.cloneNode(true);
+  const newOpacity = opacity.cloneNode(true);
+  visible.parentNode.replaceChild(newVisible, visible);
+  opacity.parentNode.replaceChild(newOpacity, opacity);
+  newVisible.addEventListener("change", function (event) {
     event.stopPropagation();
     layer.setVisible(event.target.checked);
   });
-  opacity.addEventListener("input", function (event) {
+  newOpacity.addEventListener("input", function (event) {
     event.stopPropagation();
     let currOpacity = Number(event.target.value) / Number(event.target.max);
     layer.setOpacity(currOpacity);
@@ -114,7 +150,11 @@ function loadLayer(dataType, layerVars, dataURL) {
 function getElementValues(plElements) {
   let month = Constants.MONTHMAP[plElements[Constants.SELECTORS.MONTH].value];
   let year = plElements[Constants.SELECTORS.YEAR].value;
-  let day = plElements[Constants.SELECTORS.DAY_NIGHT].value;
+  let day =
+    plElements[Constants.SELECTORS.DAY_NIGHT].style.display !==
+    Constants.DAYNIGHT.NONE
+      ? plElements[Constants.SELECTORS.DAY_NIGHT].value
+      : Constants.DAYNIGHT.NONE;
   let opacity =
     Number(plElements[Constants.SELECTORS.OPACITY].value) /
     Number(plElements[Constants.SELECTORS.OPACITY].max);
@@ -146,11 +186,3 @@ function getElementValues(plElements) {
     { opacity: opacity, visible: visible },
   ];
 }
-
-document
-  .querySelector("#pl-1 .product-layer-type")
-  .addEventListener("change", function (event) {
-    console.log("Selected value:", event.target.value);
-  });
-
-export default initLayers;

@@ -19,24 +19,8 @@
         <h4>Date</h4>
         <div id="date">
           <select class="form-control form-control-sm month-selector">
-            <option selected>January</option>
-            <option>February</option>
-            <option>March</option>
-            <option>April</option>
-            <option>May</option>
-            <option>June</option>
-            <option>July</option>
-            <option>August</option>
-            <option>September</option>
-            <option>October</option>
-            <option>November</option>
-            <option>December</option>
           </select>
           <input type="number" min="2023" max="2024" step="1" value="2024" class="year-selector" />
-          <select class="form-control form-control-sm day-night-selector">
-            <option selected> day</option>
-            <option>night</option>
-          </select>
         </div>
         <div class="product-layer container" id="pl-1">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
@@ -44,11 +28,12 @@
             <Label>Show <input type="checkbox" class="visible"></Label>
           </span>
           <div class="collapse" id="collapisble-layer-1">
+
             <div class="layer-options">
               <div class="pl-dropdown">
                 <select class="form-control form-control-sm product-layer-type">
-                  <option>LST Anomaly</option>
-                  <option>LST Borders</option>
+                </select>
+                <select class="form-control form-control-sm day-night-selector">
                 </select>
               </div>
               <label> Opacity
@@ -66,8 +51,8 @@
             <div class="layer-options">
               <div class="pl-dropdown">
                 <select class="form-control form-control-sm product-layer-type">
-                  <option selected>LST Anomaly</option>
-                  <option>LST Borders</option>
+                </select>
+                <select class="form-control form-control-sm day-night-selector">
                 </select>
               </div>
               <label> Opacity
@@ -85,8 +70,10 @@
             <div class="layer-options">
               <div class="pl-dropdown">
                 <select class="form-control form-control-sm product-layer-type">
-                  <option selected>LST Anomaly</option>
-                  <option>LST Borders</option>
+
+                </select>
+                <select class="form-control form-control-sm day-night-selector">
+
                 </select>
               </div>
               <label> Opacity
@@ -96,9 +83,7 @@
           </div>
         </div>
       </div>
-
       <form>
-
       </form>
     </div>
     <div id="map"></div>
@@ -109,8 +94,9 @@
       </div>
     </div>
   </div>
-  <script type="module" src="./src/main.js"></script>
   <script type="module" src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./src/InitializeOptions.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 
 </html>

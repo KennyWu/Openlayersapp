@@ -7,12 +7,19 @@
 #side-panel {
   border: 1px black solid;
   overflow-y: auto;
+  width: 275px;
+  min-width: 275px;
+  background-color: rgb(72, 118, 180);
+  padding: 1rem 1rem 1rem 1rem;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
 }
 
 #content {
   padding: 1rem 1rem 1rem 1rem;
-  border: solid 1px brown;
+  border: solid 1px black;
   border-radius: 5px;
+  background-color: rgb(170, 208, 250);
 }
 
 .product-layer {
@@ -70,6 +77,23 @@ input[type="range"]::-webkit-slider-track {
 }
 .day-night-selector {
   width: 30%;
+}
+
+.product-layer-type {
+  width: 7rem;
+  min-width: 7rem;
+}
+
+.day-night-selector {
+  width: 3rem;
+}
+
+.pl-dropdown {
+  display: flex;
+}
+
+.pl-dropdown select {
+  font-size: 12px;
 }
 
 .year-selector {
