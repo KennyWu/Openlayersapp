@@ -1,4 +1,4 @@
-import "./style.css";
+import "./css/style.css";
 import Map from "ol/Map.js";
 import View from "ol/View.js";
 import Overlay from "ol/Overlay";

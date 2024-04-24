@@ -6,6 +6,7 @@ let currYear = date.getFullYear();
 
 function main() {
   let yearObj = document.querySelector(Constants.SELECTORS.YEAR);
+  yearObj.min = "2014";
   yearObj.max = currYear;
   yearObj.value = currYear;
   yearObj.addEventListener("change", refillMonth);
@@ -22,17 +23,35 @@ function main() {
   });
   //Add anomaly options
   document.querySelectorAll(Constants.SELECTORS.PRODUCT_LAYER).forEach((x) => {
-    Object.values(Constants.ANOMALY_NAMES).forEach((name) => {
+    Object.values(Constants.ANOMALYMAPPING).forEach(({ name, satellites }) => {
       let option = document.createElement("option");
       option.innerHTML = name;
       x.appendChild(option);
     });
     x.addEventListener("change", displayDayNight);
+    x.addEventListener("change", displaySat);
     let event = new Event("change");
     x.dispatchEvent(event);
   });
   document.querySelectorAll(Constants.SELECTORS.VISIBLE).forEach((x) => {
     x.checked = false;
+  });
+}
+
+function displaySat(event) {
+  let anomalyObj = event.target;
+  let parentNode = anomalyObj.parentNode;
+  let satelliteObj = parentNode.querySelector(Constants.SELECTORS.SATELLITE);
+  let { satellites } = Object.values(Constants.ANOMALYMAPPING).find(
+    ({ name }) => {
+      return name === anomalyObj.value;
+    }
+  );
+  satelliteObj.innerHTML = "";
+  satellites.forEach((satellite) => {
+    let element = document.createElement("option");
+    element.innerHTML = satellite;
+    satelliteObj.appendChild(element);
   });
 }
 
@@ -48,10 +67,12 @@ function displayDayNight(event) {
 }
 
 function hasDayNightFeature(value) {
-  if (
-    value == Constants.ANOMALY_NAMES.LST_ANOMALY ||
-    value == Constants.ANOMALY_NAMES.LST_BORDER
-  ) {
+  let { hasDayNight } = Object.values(Constants.ANOMALYMAPPING).find(
+    ({ name }) => {
+      return name === value;
+    }
+  );
+  if (hasDayNight) {
     return true;
   }
 

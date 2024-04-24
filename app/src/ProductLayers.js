@@ -27,8 +27,7 @@ const mapImage = new TileLayer({
     attributions:
       "<div> &#169; " +
       '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> ' +
-      "contributors. </div>" +
-      "<div> <img class='legend' src=./legends/colorbar.png> </div>",
+      "contributors. </div>",
   }),
   zIndex: 0,
 });
@@ -52,6 +51,10 @@ export function regLayerChanges(map) {
       id + " " + Constants.SELECTORS.DAY_NIGHT
     );
 
+    let satellite = document.querySelector(
+      id + " " + Constants.SELECTORS.SATELLITE
+    );
+
     let changeLayers = function (event) {
       let newLayer = loadAndRegisterLayers(id);
       map.getLayers().setAt(i + 1, newLayer);
@@ -59,6 +62,7 @@ export function regLayerChanges(map) {
 
     productType.addEventListener("change", changeLayers);
     dayNight.addEventListener("change", changeLayers);
+    satellite.addEventListener("change", changeLayers);
   });
 
   let changeAllLayers = function (event) {
@@ -82,7 +86,8 @@ export function loadAndRegisterLayers(pl) {
       selector === Constants.SELECTORS.OPACITY ||
       selector === Constants.SELECTORS.PRODUCT_LAYER ||
       selector === Constants.SELECTORS.VISIBLE ||
-      selector == Constants.SELECTORS.DAY_NIGHT
+      selector === Constants.SELECTORS.DAY_NIGHT ||
+      selector === Constants.SELECTORS.SATELLITE
     ) {
       plElements[selector] = document.querySelector(pl + " " + selector);
     } else {
@@ -93,8 +98,13 @@ export function loadAndRegisterLayers(pl) {
   const [templateVars, layerVars] = getElementValues(plElements);
   layerVars.zIndex = Constants.PRODUCT_LAYERS_ID_MAPPING[pl];
   let dataURL = fillStringTemplate(Constants.IMAGE_TEMPLATE_URL, templateVars);
+  let legendURL = fillStringTemplate(
+    Constants.LEGEND_TEMPLATE_URL,
+    templateVars
+  );
   console.log(dataURL);
-  let layer = loadLayer(templateVars.datatype, layerVars, dataURL);
+  console.log(legendURL);
+  let layer = loadLayer(templateVars.datatype, layerVars, dataURL, legendURL);
   registerLayer(pl, layer);
   return layer;
 }
@@ -118,13 +128,14 @@ function registerLayer(pl, layer) {
   });
 }
 
-function loadLayer(dataType, layerVars, dataURL) {
+function loadLayer(dataType, layerVars, dataURL, legendURL) {
   let layer;
   if (dataType === Constants.DATATYPE.BORDERS) {
     layer = new VectorLayer({
       source: new VectorSource({
         url: dataURL,
         format: new GeoJSON(),
+        attributions: `<div> <img class='legend' src=${legendURL}> </div>`,
       }),
       style: LST_BORDER_STYLE,
       zIndex: layerVars.zIndex,
@@ -137,6 +148,7 @@ function loadLayer(dataType, layerVars, dataURL) {
         url: dataURL,
         projection: CURRPROJ,
         imageExtent: EXTENT,
+        attributions: `<div> <img class='legend' src=${legendURL}> </div>`,
       }),
       zIndex: layerVars.zIndex,
       visible: layerVars.visible,
@@ -164,16 +176,17 @@ function getElementValues(plElements) {
   )
     ? Constants.DATATYPE.BORDERS
     : Constants.DATATYPE.IMAGE;
-  let key = Object.keys(Constants.ANOMALYMAPPING).find((keyVal) => {
-    return plElements[Constants.SELECTORS.PRODUCT_LAYER].value.includes(keyVal);
-  });
-  let variable = Constants.ANOMALYMAPPING[key];
+  let { variable } = Object.values(Constants.ANOMALYMAPPING).find(
+    ({ name }) => {
+      return plElements[Constants.SELECTORS.PRODUCT_LAYER].value === name;
+    }
+  );
   let yyyymm = year + month;
   let fileformat =
     dataType === Constants.DATATYPE.BORDERS
       ? Constants.FILEFORMAT.JSON
       : Constants.FILEFORMAT.PNG;
-  let satellite = Constants.SATELLITE.JPSS;
+  let satellite = plElements[Constants.SELECTORS.SATELLITE].value;
   return [
     {
       yyyymm: yyyymm,

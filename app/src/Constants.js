@@ -1,5 +1,7 @@
 export const IMAGE_TEMPLATE_URL =
   "./{yyyymm}/{datatype}_{satellite}_{variable}_{yyyymm}_{day[night]}.{fileformat}";
+export const LEGEND_TEMPLATE_URL =
+  "./legend/legend_{variable}_{day[night]}.png";
 export const PRODUCT_LAYERS_ID_MAPPING = { "#pl-1": 1, "#pl-2": 2, "#pl-3": 3 };
 export const SELECTORS = {
   MONTH: ".month-selector",
@@ -9,14 +11,48 @@ export const SELECTORS = {
   PRODUCT_LAYER: ".product-layer-type",
   VISIBLE: ".visible",
   DATE: "#date",
+  SATELLITE: ".satellite",
 };
-export const ANOMALYMAPPING = {
-  LST: "lsta",
-  ET: "eta",
-};
+
 export const SATELLITE = {
   JPSS: "jpss",
+  MODIS: "modis",
+  GPM: "gpm",
 };
+
+export const ANOMALYMAPPING = {
+  LSTA: fillConstants(
+    "lsta",
+    "LST Anomaly",
+    [SATELLITE.JPSS, SATELLITE.MODIS],
+    true
+  ),
+  LST: fillConstants("lst", "LST", [SATELLITE.JPSS, SATELLITE.MODIS], true),
+  LST_BORDERS: fillConstants("lsta", "LST Borders", [SATELLITE.JPSS], true),
+  LAIA: fillConstants("laia", "LAI Anomaly", [SATELLITE.MODIS], false),
+  LAI: fillConstants("lai", "LAI", [SATELLITE.MODIS], false),
+  NDVIA: fillConstants("ndvia", "NDVI Anomaly", [SATELLITE.MODIS], false),
+  NDVI: fillConstants("ndvi", "NDVI", [SATELLITE.MODIS], false),
+  ETA: fillConstants("eta", "ET Anomaly", [SATELLITE.MODIS], false),
+  ET: fillConstants("et", "ET", [SATELLITE.MODIS], false),
+  ALBEDOA: fillConstants("albedoa", "ALBEDO Anomaly", [SATELLITE.MODIS], false),
+  ALBEDO: fillConstants("albedo", "ALBEDO", [SATELLITE.MODIS], false),
+  ALBEDO_SFA: fillConstants(
+    "albedo-sfa",
+    "ALBEDO-SF Anomaly",
+    [SATELLITE.MODIS],
+    false
+  ),
+  ALBEDO_SF: fillConstants("albedo-sf", "ALBEDO-SF", [SATELLITE.MODIS], false),
+  PRCP_GPMA: fillConstants(
+    "prcp-gpma",
+    "PRCP GPM Anomaly",
+    [SATELLITE.GPM],
+    false
+  ),
+  PRCP_GPMA: fillConstants("prcp-gpm", "PRCP GPM", [SATELLITE.GPM], false),
+};
+
 export const DATATYPE = {
   BORDERS: "detectionborders",
   IMAGE: "dataimage",
@@ -45,12 +81,6 @@ export const MONTHMAP = {
   December: "12",
 };
 
-export const ANOMALY_NAMES = {
-  LST_ANOMALY: "LST Anomaly",
-  LST_BORDER: "LST Borders",
-  ET_ANOMALY: "ET Anomaly",
-};
-
 export const monthNames = [
   "January",
   "February",
@@ -66,6 +96,15 @@ export const monthNames = [
   "December",
 ];
 
+function fillConstants(variable, name, satellites, hasDayNight) {
+  return {
+    variable: variable,
+    name: name,
+    satellites: satellites,
+    hasDayNight: hasDayNight,
+  };
+}
+
 Object.freeze(SELECTORS);
 Object.freeze(ANOMALYMAPPING);
 Object.freeze(SATELLITE);
@@ -73,4 +112,3 @@ Object.freeze(PRODUCT_LAYERS_ID_MAPPING);
 Object.freeze(DATATYPE);
 Object.freeze(FILEFORMAT);
 Object.freeze(MONTHMAP);
-Object.freeze(ANOMALY_NAMES);
