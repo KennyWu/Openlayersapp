@@ -92,10 +92,6 @@ button:hover {
   background-color: lightblue;
 }
 
-.dropdown-item {
-  font-size: 0.8rem;
-}
-
 .dropdown-item:hover {
   background-color: aqua;
 }

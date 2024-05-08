@@ -13,7 +13,7 @@ import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
 
 const currProj = "ESPG:4326";
-const extent = [-180, -105, 180, 105];
+const extent = [-180, -110, 180, 110];
 const container = document.getElementById("popup");
 const content = document.getElementById("popup-content");
 const closer = document.getElementById("popup-closer");
