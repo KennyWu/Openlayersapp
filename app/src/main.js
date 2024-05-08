@@ -1,4 +1,6 @@
 import "./css/style.css";
+import "@fortawesome/fontawesome-free/js/all.js";
+import "@fontsource/source-sans-pro";
 import Map from "ol/Map.js";
 import View from "ol/View.js";
 import Overlay from "ol/Overlay";
@@ -7,12 +9,11 @@ import Attribution from "ol/control/Attribution.js";
 import MousePosition from "ol/control/MousePosition.js";
 import FullScreen from "ol/control/FullScreen.js";
 import Download from "./Download.js";
-import { loadAndRegisterLayers } from "./ProductLayers.js";
 import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
 
 const currProj = "ESPG:4326";
-const extent = [-180, -90, 180, 90];
+const extent = [-180, -105, 180, 105];
 const container = document.getElementById("popup");
 const content = document.getElementById("popup-content");
 const closer = document.getElementById("popup-closer");
@@ -20,7 +21,7 @@ const view = new View({
   projection: "EPSG:4326",
   extent: extent,
   center: [0, 0],
-  zoom: 2.5,
+  zoom: 0,
   maxZoom: 8,
 });
 const overlay = new Overlay({

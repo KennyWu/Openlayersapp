@@ -3,7 +3,7 @@ import Control from "ol/control/Control";
 class Download extends Control {
   constructor(options) {
     const download = document.createElement("button");
-    download.innerHTML = "\u21E9";
+    download.innerHTML = '<i class="fa-solid fa-download"></i>';
 
     const element = document.createElement("div");
     element.className = "download ol-unselectable ol-control";

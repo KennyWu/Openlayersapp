@@ -135,7 +135,6 @@ function loadLayer(dataType, layerVars, dataURL, legendURL) {
       source: new VectorSource({
         url: dataURL,
         format: new GeoJSON(),
-        attributions: `<div> <img class='legend' src=${legendURL}> </div>`,
       }),
       style: LST_BORDER_STYLE,
       zIndex: layerVars.zIndex,

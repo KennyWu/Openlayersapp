@@ -53,6 +53,11 @@ function displaySat(event) {
     element.innerHTML = satellite;
     satelliteObj.appendChild(element);
   });
+  if (satellites.length === 1) {
+    satelliteObj.style.display = "none";
+  } else {
+    satelliteObj.style.display = "block";
+  }
 }
 
 function displayDayNight(event) {

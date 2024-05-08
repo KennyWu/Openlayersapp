@@ -3,18 +3,22 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="./logo/noaa.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Protoytpe Map</title>
+  <title>NOAA Map Services</title>
 </head>
 
 <body>
   <div id="screen">
     <div id="side-panel">
       <div id="heading">
-        <img id="logo" src="./logo/logo.png" alt="logo">
-        <h1 id="website-name">NOAA Map Services</h1>
+        <img id="logo" src="./logo/noaa.svg" alt="logo">
+        <div>
+          <h1 id="title-name">NOAA Map Services</h1>
+        </div>
       </div>
+
+
       <div id="content">
         <h4>Date</h4>
         <div id="date">
@@ -25,7 +29,9 @@
         <div class="product-layer container" id="pl-1">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-1">+ Layer 1</button>
-            <Label>Show <input type="checkbox" class="visible"></Label>
+            <Label class="show">
+              Show <input type="checkbox" class="visible">
+            </Label>
           </span>
           <div class="collapse" id="collapisble-layer-1">
             <div class="layer-options">
@@ -45,7 +51,7 @@
         <div class="product-layer container" id="pl-2">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-2">+ Layer 2</button>
-            <Label>Show <input type="checkbox" class="visible"></Label>
+            <Label class="show">Show <input type="checkbox" class="visible"></Label>
           </span>
           <div class="collapse" id="collapisble-layer-2">
             <div class="layer-options">
@@ -65,7 +71,7 @@
         <div class="product-layer container" id="pl-3">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-3">+ Layer 3</button>
-            <Label>Show <input type="checkbox" class="visible"></Label>
+            <Label class="show">Show <input type="checkbox" class="visible"></Label>
           </span>
           <div class="collapse" id="collapisble-layer-3">
             <div class="layer-options">

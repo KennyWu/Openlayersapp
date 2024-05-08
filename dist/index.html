@@ -3,38 +3,44 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="./logo/noaa.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Protoytpe Map</title>
-  <script type="module" crossorigin src="./assets/index-wvnHAZr4.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-0qcf6heF.css">
+  <title>NOAA Map Services</title>
+  <script type="module" crossorigin src="./assets/index--cc6jOWy.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-TfycLBk5.css">
 </head>
 
 <body>
   <div id="screen">
     <div id="side-panel">
       <div id="heading">
-        <img id="logo" src="./logo/logo.png" alt="logo">
-        <h1 id="website-name">NOAA Map Services</h1>
+        <img id="logo" src="./logo/noaa.svg" alt="logo">
+        <div>
+          <h1 id="title-name">NOAA Map Services</h1>
+        </div>
       </div>
+
+
       <div id="content">
         <h4>Date</h4>
         <div id="date">
           <select class="form-control form-control-sm month-selector">
           </select>
-          <input type="number" min="2023" max="2024" step="1" value="2024" class="year-selector" />
+          <input type="number" min="2014" max="2024" step="1" value="2024" class="year-selector" />
         </div>
         <div class="product-layer container" id="pl-1">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-1">+ Layer 1</button>
-            <Label>Show <input type="checkbox" class="visible"></Label>
+            <Label class="show">
+              Show <input type="checkbox" class="visible">
+            </Label>
           </span>
           <div class="collapse" id="collapisble-layer-1">
-
             <div class="layer-options">
+              <select class="form-control form-control-sm product-layer-type">
+              </select>
               <div class="pl-dropdown">
-                <select class="form-control form-control-sm product-layer-type">
-                </select>
+                <select class="form-control form-control-sm satellite"></select>
                 <select class="form-control form-control-sm day-night-selector">
                 </select>
               </div>
@@ -47,13 +53,14 @@
         <div class="product-layer container" id="pl-2">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-2">+ Layer 2</button>
-            <Label>Show <input type="checkbox" class="visible"></Label>
+            <Label class="show">Show <input type="checkbox" class="visible"></Label>
           </span>
           <div class="collapse" id="collapisble-layer-2">
             <div class="layer-options">
+              <select class="form-control form-control-sm product-layer-type">
+              </select>
               <div class="pl-dropdown">
-                <select class="form-control form-control-sm product-layer-type">
-                </select>
+                <select class="form-control form-control-sm satellite"></select>
                 <select class="form-control form-control-sm day-night-selector">
                 </select>
               </div>
@@ -66,16 +73,15 @@
         <div class="product-layer container" id="pl-3">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-3">+ Layer 3</button>
-            <Label>Show <input type="checkbox" class="visible"></Label>
+            <Label class="show">Show <input type="checkbox" class="visible"></Label>
           </span>
           <div class="collapse" id="collapisble-layer-3">
             <div class="layer-options">
+              <select class="form-control form-control-sm product-layer-type">
+              </select>
               <div class="pl-dropdown">
-                <select class="form-control form-control-sm product-layer-type">
-
-                </select>
+                <select class="form-control form-control-sm satellite"></select>
                 <select class="form-control form-control-sm day-night-selector">
-
                 </select>
               </div>
               <label> Opacity
