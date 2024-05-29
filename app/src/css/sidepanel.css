@@ -18,6 +18,14 @@
   justify-content: space-between;
 }
 
+.btn-month {
+  background-color: whitesmoke;
+}
+
+td {
+  padding: 0px 0px 0px 0px;
+}
+
 #logo {
   width: 4rem;
   height: 4rem;
@@ -124,8 +132,8 @@ input[type="range"]::-webkit-slider-track {
 }
 
 .month-selector {
-  min-width: 30%;
-  max-width: 40%;
+  min-width: 100%;
+  border: 1px solid gray;
 }
 .day-night-selector {
   width: 30%;
@@ -158,5 +166,6 @@ input[type="range"]::-webkit-slider-track {
 }
 
 .year-selector {
-  width: 30%;
+  min-width: 2rem;
+  max-width: 4rem;
 }

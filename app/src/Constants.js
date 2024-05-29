@@ -12,6 +12,8 @@ export const SELECTORS = {
   VISIBLE: ".visible",
   DATE: "#date",
   SATELLITE: ".satellite",
+  Month_SELECT_RIGHT: "#month-right",
+  Month_SELECT_LEFT: "#month-left",
 };
 
 export const SATELLITE = {
