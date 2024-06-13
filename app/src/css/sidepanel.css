@@ -18,6 +18,20 @@
   justify-content: space-between;
 }
 
+.non-product-option {
+  margin-top: 2px;
+  border: black 1px solid;
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.option-header {
+  font-size: 1.2rem;
+  margin: 0px 0px 0px 0px;
+  font-weight: normal;
+}
+
 .btn-month {
   background-color: whitesmoke;
 }
@@ -113,10 +127,6 @@ button:hover {
   padding: 1rem 1rem 1rem 1rem;
 }
 
-input[type="range"]::-webkit-slider-track {
-  background-color: gray;
-}
-
 .form-range::-moz-range-track {
   background-color: gray;
 }
@@ -131,10 +141,11 @@ input[type="range"]::-webkit-slider-track {
   font-size: 14px;
 }
 
-.month-selector {
+.btn-select {
   min-width: 100%;
   border: 1px solid gray;
 }
+
 .day-night-selector {
   width: 30%;
 }

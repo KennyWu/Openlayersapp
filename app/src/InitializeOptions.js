@@ -1,4 +1,5 @@
 import * as Constants from "./Constants.js";
+import SelectCustom from "./SelectCustom.js";
 //TODO intialize current date with months lookbook for current year
 let date = new Date();
 let currMonth = date.getMonth();
@@ -11,6 +12,9 @@ function main() {
   yearObj.value = yearObj.max;
   yearObj.addEventListener("change", refillMonth);
   yearObj.dispatchEvent(new Event("change"));
+
+  let continents = document.querySelector("#continents");
+  continents.addOptions(Constants.CONTINENTS);
 
   //Add day and night selectors
   document.querySelectorAll(Constants.SELECTORS.DAY_NIGHT).forEach((x) => {
@@ -33,6 +37,7 @@ function main() {
     let event = new Event("change");
     x.dispatchEvent(event);
   });
+  document.querySelector(Constants.SELECTORS.ENABLE_ANIMATE).checked = false;
   document.querySelectorAll(Constants.SELECTORS.VISIBLE).forEach((x) => {
     x.checked = false;
   });
@@ -109,6 +114,5 @@ function refillMonth(event) {
   monthSelectionObj.value = Constants.monthNames[monthIndex];
   // monthSelectionObj.value = "January";
 }
-
 
 main();

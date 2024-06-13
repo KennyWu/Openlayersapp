@@ -20,22 +20,34 @@
 
 
       <div id="content">
-        <h4>Date</h4>
-        <div id="date">
-          <table>
-            <tr>
-              <td><button type="button" id="month-left" class="btn btn-month btn-outline-secondary btn-sm">
-                  &lt;
-                </button></td>
-              <td>
-                <select disabled class="form-control form-control-sm month-selector"></select>
-              </td>
-              <td><button type="button" id="month-right" class="btn btn-month btn-outline-secondary btn-sm">
-                  &gt;
-                </button></td>
-            </tr>
-          </table>
-          <input type="number" min="2014" max="2024" step="1" value="2024" class="year-selector" />
+        <div class="non-product-option">
+          <h5 class="option-header">Date</h5>
+          <div id="date">
+            <table>
+              <tr>
+                <td><button type="button" id="month-left" class="btn btn-month btn-outline-secondary btn-sm left">
+                    &lt;
+                  </button></td>
+                <td>
+                  <select disabled class="form-control form-control-sm month-selector btn-select"></select>
+                </td>
+                <td><button type="button" id="month-right" class="btn btn-month btn-outline-secondary btn-sm right">
+                    &gt;
+                  </button></td>
+              </tr>
+            </table>
+            <input type="number" min="2014" max="2024" step="1" value="2024" class="year-selector" />
+          </div>
+        </div>
+        <div class="non-product-option">
+          <h5 class="option-header">View</h5>
+          <custom-selector id="continents"></custom-selector>
+        </div>
+        <div class="non-product-option">
+          <h5 class="option-header">Animation</h5>
+          <Label>Enable: <input type="checkbox" id="animate"></Label>
+          <Label>Interval: <input type="range" class="form-range" id="animate-speed" value="1000" min="500" max="10000"
+              step="1" /></Label>
         </div>
         <div class="product-layer container" id="pl-1">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"

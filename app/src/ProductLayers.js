@@ -70,9 +70,8 @@ export function regLayerChanges(map) {
     map.setLayers(layers);
   };
 
-
   let dateTime = document.querySelector(Constants.SELECTORS.DATE);
-  dateTime.addEventListener("click", changeMonth)
+  dateTime.addEventListener("click", changeMonth);
   dateTime.addEventListener("change", changeAllLayers);
 }
 
@@ -202,21 +201,21 @@ function getElementValues(plElements) {
 }
 
 function changeMonth(event) {
-  let target = event.target; 
+  let target = event.target;
   let left = document.querySelector(Constants.SELECTORS.Month_SELECT_LEFT);
   let right = document.querySelector(Constants.SELECTORS.Month_SELECT_RIGHT);
   let month = document.querySelector(Constants.SELECTORS.MONTH);
   let dateTime = document.querySelector(Constants.SELECTORS.DATE);
   let step = 0;
   if (left.id === target.id) {
-    step = -1; 
+    step = -1;
   } else if (right.id === target.id) {
     step = 1;
   }
   let currIndex = month.selectedIndex;
   currIndex += step;
   if (currIndex < 0) {
-    currIndex = month.options.length-1
+    currIndex = month.options.length - 1;
   } else if (currIndex >= month.options.length) {
     currIndex = 0;
   }
@@ -224,3 +223,11 @@ function changeMonth(event) {
   dateTime.dispatchEvent(new Event("change"));
 }
 
+export function setAllVisibility(status) {
+  let sources = document.querySelectorAll(Constants.SELECTORS.VISIBLE);
+  console.log(sources);
+  sources.forEach((x) => {
+    x.checked = status;
+    x.dispatchEvent(new Event("change"));
+  });
+}

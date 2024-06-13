@@ -9,6 +9,7 @@ import Attribution from "ol/control/Attribution.js";
 import MousePosition from "ol/control/MousePosition.js";
 import FullScreen from "ol/control/FullScreen.js";
 import Download from "./Download.js";
+import * as Constants from "./Constants.js";
 import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
 
@@ -21,7 +22,7 @@ const view = new View({
   projection: "EPSG:4326",
   extent: extent,
   center: [0, 0],
-  zoom: 0,
+  zoom: 2,
   maxZoom: 8,
 });
 const overlay = new Overlay({
@@ -38,6 +39,8 @@ let newAttribution = new Attribution({
   collapsible: false,
   collapsed: false,
 });
+let intervalID = 0;
+let animateIndex = 1;
 
 function main() {
   map = new Map({
@@ -49,6 +52,8 @@ function main() {
   map.setLayers(ProductLayers.initLayers());
   ProductLayers.regLayerChanges(map);
   registerMapHandlers();
+  registerViewHandlers(map);
+  registerAnimationHandler();
 }
 
 function init_controls() {
@@ -103,6 +108,54 @@ function registerMapHandlers() {
     closer.blur();
     return false;
   };
+}
+
+function registerViewHandlers() {
+  document
+    .querySelector(Constants.SELECTORS.CONTINENTS)
+    .addEventListener("change", (event) => {
+      // console.log("heard");
+      let view = map.getView();
+      let newCenter = Constants.CONTINENT_VIEWS[event.target.getValue()].center;
+      let newZoom = Constants.CONTINENT_VIEWS[event.target.getValue()].zoom;
+      view.setCenter(newCenter);
+      view.setZoom(newZoom);
+    });
+}
+
+function registerAnimationHandler() {
+  let enableAnimateEle = document.querySelector(
+    Constants.SELECTORS.ENABLE_ANIMATE
+  );
+  let animateSpeedEle = document.querySelector(
+    Constants.SELECTORS.ANIMATE_SPEED
+  );
+  enableAnimateEle.addEventListener("change", function (event) {
+    clearAnimate();
+    if (event.target.checked) {
+      startAnimate(animateSpeedEle.value);
+    }
+  });
+  animateSpeedEle.addEventListener("change", function (event) {
+    enableAnimateEle.dispatchEvent(new Event("change"));
+  });
+}
+
+function startAnimate(time) {
+  intervalID = setInterval(function () {
+    ProductLayers.setAllVisibility(false);
+    if (animateIndex == 3) {
+      animateIndex = 1;
+    } else {
+      animateIndex += 1;
+    }
+    map.getLayers().item(animateIndex).setVisible(true);
+  }, time);
+}
+
+function clearAnimate() {
+  ProductLayers.setAllVisibility(false);
+  clearInterval(intervalID);
 }
 
 window.onload = main;
