@@ -12,6 +12,7 @@ import Download from "./Download.js";
 import * as Constants from "./Constants.js";
 import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
+import { initAnimationService } from "./Animation.js";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -110, 180, 110];
@@ -51,9 +52,10 @@ function main() {
   });
   map.setLayers(ProductLayers.initLayers());
   ProductLayers.regLayerChanges(map);
+  changeContinentSelectMode();
   registerMapHandlers();
   registerViewHandlers(map);
-  registerAnimationHandler();
+  initAnimationService(map);
 }
 
 function init_controls() {
@@ -110,11 +112,14 @@ function registerMapHandlers() {
   };
 }
 
+function changeContinentSelectMode() {
+  document.querySelector(Constants.SELECTORS.CONTINENTS).regularSelectMode();
+}
+
 function registerViewHandlers() {
   document
     .querySelector(Constants.SELECTORS.CONTINENTS)
     .addEventListener("change", (event) => {
-      // console.log("heard");
       let view = map.getView();
       let newCenter = Constants.CONTINENT_VIEWS[event.target.getValue()].center;
       let newZoom = Constants.CONTINENT_VIEWS[event.target.getValue()].zoom;

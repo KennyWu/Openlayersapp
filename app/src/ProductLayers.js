@@ -69,9 +69,10 @@ export function regLayerChanges(map) {
     let layers = initLayers();
     map.setLayers(layers);
   };
-
+  /*
+  TODO fix the constants Selector - change the constants and replace 
+  */
   let dateTime = document.querySelector(Constants.SELECTORS.DATE);
-  dateTime.addEventListener("click", changeMonth);
   dateTime.addEventListener("change", changeAllLayers);
 }
 
@@ -160,8 +161,8 @@ function loadLayer(dataType, layerVars, dataURL, legendURL) {
 }
 
 function getElementValues(plElements) {
-  let month = Constants.MONTHMAP[plElements[Constants.SELECTORS.MONTH].value];
-  let year = plElements[Constants.SELECTORS.YEAR].value;
+  let month = Constants.MONTHMAP[plElements[Constants.SELECTORS.DATE].month];
+  let year = plElements[Constants.SELECTORS.DATE].getYear();
   let day =
     plElements[Constants.SELECTORS.DAY_NIGHT].style.display !==
     Constants.DAYNIGHT.NONE
@@ -198,29 +199,6 @@ function getElementValues(plElements) {
     },
     { opacity: opacity, visible: visible },
   ];
-}
-
-function changeMonth(event) {
-  let target = event.target;
-  let left = document.querySelector(Constants.SELECTORS.Month_SELECT_LEFT);
-  let right = document.querySelector(Constants.SELECTORS.Month_SELECT_RIGHT);
-  let month = document.querySelector(Constants.SELECTORS.MONTH);
-  let dateTime = document.querySelector(Constants.SELECTORS.DATE);
-  let step = 0;
-  if (left.id === target.id) {
-    step = -1;
-  } else if (right.id === target.id) {
-    step = 1;
-  }
-  let currIndex = month.selectedIndex;
-  currIndex += step;
-  if (currIndex < 0) {
-    currIndex = month.options.length - 1;
-  } else if (currIndex >= month.options.length) {
-    currIndex = 0;
-  }
-  month.selectedIndex = currIndex;
-  dateTime.dispatchEvent(new Event("change"));
 }
 
 export function setAllVisibility(status) {

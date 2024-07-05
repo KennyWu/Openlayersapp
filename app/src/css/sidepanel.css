@@ -19,11 +19,18 @@
 }
 
 .non-product-option {
-  margin-top: 2px;
+  margin-top: 1rem;
   border: black 1px solid;
-  padding: 5px 5px 5px 5px;
+  padding: 5px 10px 5px 10px;
   border-radius: 5px;
   font-weight: bold;
+}
+
+.animation-settings {
+  /* border: 1px black solid; */
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
 }
 
 .option-header {
@@ -84,9 +91,15 @@ td {
   margin-top: 1rem;
 }
 
+.non-product-option .btn-collapse :hover {
+  color: black;
+}
+
+.non-product-option .btn-collapse,
 .product-layer button,
 .product-layer .show {
   border-style: none;
+  padding: 0px;
   background: none;
   color: white;
   font-weight: bold;
@@ -131,14 +144,22 @@ button:hover {
   background-color: gray;
 }
 
-#date {
+.show {
+  display: flex;
+  align-items: center;
+}
+input[type="checkbox"] {
+  flex: none;
+}
+
+.date-custom {
   display: flex;
   justify-content: center;
 }
 
-#date select,
-#date input {
-  font-size: 14px;
+.date-custom select,
+.date-custom input {
+  font-size: 5px;
 }
 
 .btn-select {
@@ -159,7 +180,8 @@ button:hover {
   display: flex;
 }
 
-.product-layer select {
+.product-layer select,
+.non-product-option select {
   font-size: 12px;
 }
 

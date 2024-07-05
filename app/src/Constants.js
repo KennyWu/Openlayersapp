@@ -4,19 +4,21 @@ export const LEGEND_TEMPLATE_URL =
   "./legend/legend_{variable}_{day[night]}.png";
 export const PRODUCT_LAYERS_ID_MAPPING = { "#pl-1": 1, "#pl-2": 2, "#pl-3": 3 };
 export const SELECTORS = {
-  MONTH: ".month-selector",
-  YEAR: ".year-selector",
   DAY_NIGHT: ".day-night-selector",
   OPACITY: ".opacity",
   PRODUCT_LAYER: ".product-layer-type",
   VISIBLE: ".visible",
   DATE: "#date",
   SATELLITE: ".satellite",
-  Month_SELECT_RIGHT: "#month-right",
-  Month_SELECT_LEFT: "#month-left",
   CONTINENTS: "#continents",
   ENABLE_ANIMATE: "#animate",
   ANIMATE_SPEED: "#animate-speed",
+  ANIMATE_FROM: "#from-date",
+  ANIMATE_TO: "#to-date",
+  ANIMATION_LAYER: "#animation-layer",
+  ANIMATION_DATE_RANGE: "#animation-date-range",
+  ANIMATION_CONFIGURE: "#animation-configure",
+  ANIMATION_PRODUCT_LAYER: "#animation-product-layer",
 };
 
 export const SATELLITE = {
@@ -101,7 +103,7 @@ export const monthNames = [
   "December",
 ];
 
-export const CONTINENTS = ["Global", "AF", "AN", "AS", "EU", "NA", "OC", "SA"];
+export const CONTINENTS = ["Global", "AF", "AS", "EU", "NA", "OC", "SA"];
 
 export const CONTINENT_VIEWS = {
   Global: {
@@ -120,10 +122,10 @@ export const CONTINENT_VIEWS = {
     center: [28.70623446400729, 0.20404521197346392],
     zoom: 3.7534629689815597,
   },
-  AN: {
-    center: [3.614104403963678, -8.920360151165461],
-    zoom: 2.4084629689815586,
-  },
+  // AN: {
+  //   center: [3.614104403963678, -8.920360151165461],
+  //   zoom: 2.4084629689815586,
+  // },
   EU: {
     center: [12.625158068975857, 53.316551892077825],
     zoom: 4.473462968981556,
@@ -146,6 +148,10 @@ function fillConstants(variable, name, satellites, hasDayNight) {
     hasDayNight: hasDayNight,
   };
 }
+
+export const MIN_YEAR_LOOKBACK = 2014;
+export const LOOP_END_BEGIN_EVENT = "Loop-end-begin";
+export const LOOP_BEGIN_END_EVENT = "Loop-begin-end";
 
 Object.freeze(CONTINENT_VIEWS);
 Object.freeze(SELECTORS);

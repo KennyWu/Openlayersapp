@@ -1,18 +1,12 @@
 import * as Constants from "./Constants.js";
-import SelectCustom from "./SelectCustom.js";
+import SelectCustom from "./CustomComponents/SelectCustom.js";
+import DateCustom from "./CustomComponents/DateCustom.js";
 //TODO intialize current date with months lookbook for current year
 let date = new Date();
 let currMonth = date.getMonth();
 let currYear = date.getFullYear();
 
 function main() {
-  let yearObj = document.querySelector(Constants.SELECTORS.YEAR);
-  yearObj.min = "2014";
-  yearObj.max = currMonth == 0 ? currYear - 1 : currYear;
-  yearObj.value = yearObj.max;
-  yearObj.addEventListener("change", refillMonth);
-  yearObj.dispatchEvent(new Event("change"));
-
   let continents = document.querySelector("#continents");
   continents.addOptions(Constants.CONTINENTS);
 
@@ -87,32 +81,6 @@ function hasDayNightFeature(value) {
   }
 
   return false;
-}
-function refillMonth(event) {
-  let yearObj = event.target;
-  let monthSelectionObj = document.querySelector(Constants.SELECTORS.MONTH);
-  let monthIndex = currMonth == 0 ? 11 : currMonth - 1;
-  monthSelectionObj.innerHTML = "";
-  if (yearObj.value == yearObj.max) {
-    Constants.monthNames
-      .filter((value, i) => i <= monthIndex)
-      .forEach((month) => {
-        let option = document.createElement("option");
-        option.innerHTML = month;
-        monthSelectionObj.appendChild(option);
-      });
-  } else {
-    Constants.monthNames.forEach((month) => {
-      let option = document.createElement("option");
-      option.innerHTML = month;
-      monthSelectionObj.appendChild(option);
-    });
-  }
-  //Hard code for now, i dont have data for april
-  //Move to somewhere in the if blocks
-
-  monthSelectionObj.value = Constants.monthNames[monthIndex];
-  // monthSelectionObj.value = "January";
 }
 
 main();
