@@ -6,8 +6,8 @@
   <link rel="icon" type="image/x-icon" href="./logo/noaa.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NOAA Map Services</title>
-  <script type="module" crossorigin src="./assets/index-z8PI6stw.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-4KOUIJhT.css">
+  <script type="module" crossorigin src="./assets/index-Wrz-v0_4.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-yg3HKNHM.css">
 </head>
 
 <body>
@@ -24,32 +24,40 @@
       <div id="content">
         <div class="non-product-option">
           <h5 class="option-header">Date</h5>
-          <div id="date">
-            <table>
-              <tr>
-                <td><button type="button" id="month-left" class="btn btn-month btn-outline-secondary btn-sm left">
-                    &lt;
-                  </button></td>
-                <td>
-                  <select disabled class="form-control form-control-sm month-selector btn-select"></select>
-                </td>
-                <td><button type="button" id="month-right" class="btn btn-month btn-outline-secondary btn-sm right">
-                    &gt;
-                  </button></td>
-              </tr>
-            </table>
-            <input type="number" min="2014" max="2024" step="1" value="2024" class="year-selector" />
-          </div>
+          <custom-date id="date" class="date-custom"></custom-date>
         </div>
         <div class="non-product-option">
           <h5 class="option-header">View</h5>
           <custom-selector id="continents"></custom-selector>
         </div>
         <div class="non-product-option">
-          <h5 class="option-header">Animation</h5>
-          <Label>Enable: <input type="checkbox" id="animate"></Label>
-          <Label>Interval: <input type="range" class="form-range" id="animate-speed" value="1000" min="500" max="10000"
-              step="1" /></Label>
+          <button class="btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#animation-layer">
+            <h5 class="option-header">Animation</h5>
+          </button>
+          <div class="collapse" id="animation-layer">
+            <div class="layer-options">
+              <div class="animation-settings" id="animation-configure">
+                <Label>Enable: <input type="checkbox" id="animate"></Label>
+                <Label>Animation Interval: <input type="range" class="form-range" id="animate-speed" value="1000"
+                    min="500" max="10000" step="1" /></Label>
+              </div>
+              <div class="animation-settings" id="animation-date-range">
+                <div>From: <custom-date id="from-date"></custom-date></div>
+                <div>To: <custom-date id="to-date"></custom-date></div>
+              </div>
+              <div class="animation-settings" id="animation-product-layer">
+                <select class="form-control form-control-sm product-layer-type"></select>
+                <div class="pl-dropdown">
+                  <select class="form-control form-control-sm satellite"></select>
+                  <select class="form-control form-control-sm day-night-selector"></select>
+                </div>
+                <label>
+                  Opacity
+                  <input type="range" class="form-range opacity" value="100" min="0" max="100" step="1" />
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="product-layer container" id="pl-1">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"

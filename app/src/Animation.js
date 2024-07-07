@@ -73,8 +73,8 @@ class AnimationService {
       "change",
       function () {
         this.#dateIndex = 0;
-        this.#enable.dispatchEvent(new Event("change"));
         this.#updateProductAnimationLayer.bind(this);
+        this.#enable.dispatchEvent(new Event("change"));
       }.bind(this)
     );
     this.#opacity.addEventListener("input", (event) => {
@@ -105,6 +105,7 @@ class AnimationService {
     this.#animationSpeed.addEventListener(
       "input",
       function (event) {
+        this.#dateIndex = 0;
         this.#enable.dispatchEvent(new Event("change"));
       }.bind(this)
     );
@@ -226,6 +227,7 @@ class AnimationService {
         source: new VectorSource({
           url: dataURL,
           format: new GeoJSON(),
+          attributions: `<div> Now Showing ${date} </div>`,
         }),
         style: LST_BORDER_STYLE,
         zIndex: layerVars.zIndex,
