@@ -128,39 +128,4 @@ function registerViewHandlers() {
     });
 }
 
-function registerAnimationHandler() {
-  let enableAnimateEle = document.querySelector(
-    Constants.SELECTORS.ENABLE_ANIMATE
-  );
-  let animateSpeedEle = document.querySelector(
-    Constants.SELECTORS.ANIMATE_SPEED
-  );
-  enableAnimateEle.addEventListener("change", function (event) {
-    clearAnimate();
-    if (event.target.checked) {
-      startAnimate(animateSpeedEle.value);
-    }
-  });
-  animateSpeedEle.addEventListener("change", function (event) {
-    enableAnimateEle.dispatchEvent(new Event("change"));
-  });
-}
-
-function startAnimate(time) {
-  intervalID = setInterval(function () {
-    ProductLayers.setAllVisibility(false);
-    if (animateIndex == 3) {
-      animateIndex = 1;
-    } else {
-      animateIndex += 1;
-    }
-    map.getLayers().item(animateIndex).setVisible(true);
-  }, time);
-}
-
-function clearAnimate() {
-  ProductLayers.setAllVisibility(false);
-  clearInterval(intervalID);
-}
-
 window.onload = main;

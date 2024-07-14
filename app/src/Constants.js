@@ -3,6 +3,11 @@ export const IMAGE_TEMPLATE_URL =
 export const LEGEND_TEMPLATE_URL =
   "./legend/legend_{variable}_{day[night]}.png";
 export const PRODUCT_LAYERS_ID_MAPPING = { "#pl-1": 1, "#pl-2": 2, "#pl-3": 3 };
+export const ANIMATE_PRODUCT_LAYER_ENABLE = [
+  "#animatepl-1",
+  "#animatepl-2",
+  "#animatepl-3",
+];
 export const SELECTORS = {
   DAY_NIGHT: ".day-night-selector",
   OPACITY: ".opacity",

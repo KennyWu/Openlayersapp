@@ -32,6 +32,16 @@ const mapImage = new TileLayer({
   zIndex: 0,
 });
 
+export function getLayersAtDate(date) {
+  let layers = [];
+  Object.keys(Constants.PRODUCT_LAYERS_ID_MAPPING).forEach((id) => {
+    let currLayer = loadAndRegisterLayers(id, date, false);
+    layers.push(currLayer);
+  });
+
+  return layers;
+}
+
 export function initLayers() {
   let layers = [mapImage];
   Object.keys(Constants.PRODUCT_LAYERS_ID_MAPPING).forEach((id) => {
@@ -81,7 +91,7 @@ export function regLayerChanges(map) {
  * @param {*} pl - the product layer id of the html element
  * @returns layer object
  */
-export function loadAndRegisterLayers(pl) {
+export function loadAndRegisterLayers(pl, date = null, regEnable = true) {
   let plElements = {};
   Object.values(Constants.SELECTORS).forEach((selector) => {
     if (
@@ -98,6 +108,9 @@ export function loadAndRegisterLayers(pl) {
   });
 
   const [templateVars, layerVars] = getElementValues(plElements);
+  if (date != null) {
+    templateVars.yyyymm = date;
+  }
   layerVars.zIndex = Constants.PRODUCT_LAYERS_ID_MAPPING[pl];
   let dataURL = fillStringTemplate(Constants.IMAGE_TEMPLATE_URL, templateVars);
   let legendURL = fillStringTemplate(
@@ -107,11 +120,11 @@ export function loadAndRegisterLayers(pl) {
   console.log(dataURL);
   console.log(legendURL);
   let layer = loadLayer(templateVars.datatype, layerVars, dataURL, legendURL);
-  registerLayer(pl, layer);
+  registerLayer(pl, layer, regEnable);
   return layer;
 }
 
-function registerLayer(pl, layer) {
+function registerLayer(pl, layer, regEnable) {
   //We are reregistering event listeners to new
   let visible = document.querySelector(pl + " " + Constants.SELECTORS.VISIBLE);
   let opacity = document.querySelector(pl + " " + Constants.SELECTORS.OPACITY);
@@ -119,10 +132,12 @@ function registerLayer(pl, layer) {
   const newOpacity = opacity.cloneNode(true);
   visible.parentNode.replaceChild(newVisible, visible);
   opacity.parentNode.replaceChild(newOpacity, opacity);
-  newVisible.addEventListener("change", function (event) {
-    event.stopPropagation();
-    layer.setVisible(event.target.checked);
-  });
+  if (regEnable) {
+    newVisible.addEventListener("change", function (event) {
+      event.stopPropagation();
+      layer.setVisible(event.target.checked);
+    });
+  }
   newOpacity.addEventListener("input", function (event) {
     event.stopPropagation();
     let currOpacity = Number(event.target.value) / Number(event.target.max);
