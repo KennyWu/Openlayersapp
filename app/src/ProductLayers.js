@@ -35,21 +35,49 @@ const mapImage = new TileLayer({
 export function getLayersAtDate(date) {
   let layers = [];
   Object.keys(Constants.PRODUCT_LAYERS_ID_MAPPING).forEach((id) => {
-    let currLayer = loadAndRegisterLayers(id, date, false);
+    let currLayer = loadLayers(id, date, false);
     layers.push(currLayer);
   });
 
   return layers;
 }
 
-export function initLayers() {
+export function initLayers(map) {
   let layers = [mapImage];
   Object.keys(Constants.PRODUCT_LAYERS_ID_MAPPING).forEach((id) => {
-    let currLayer = loadAndRegisterLayers(id);
+    let currLayer = loadLayers(id);
     layers.push(currLayer);
   });
 
   return layers;
+}
+
+export function registerLayerHandlers(layers, startIndex, enableVisible) {
+  startIndex -= 1;
+  Object.keys(Constants.PRODUCT_LAYERS_ID_MAPPING).forEach((pl) => {
+    let visible = document.querySelector(
+      pl + " " + Constants.SELECTORS.VISIBLE
+    );
+    let opacity = document.querySelector(
+      pl + " " + Constants.SELECTORS.OPACITY
+    );
+
+    if (enableVisible) {
+      visible.addEventListener("change", function (event) {
+        event.stopPropagation();
+        layers[startIndex + Constants.PRODUCT_LAYERS_ID_MAPPING[pl]].setVisible(
+          event.target.checked
+        );
+      });
+    }
+    opacity.addEventListener("input", function (event) {
+      event.stopPropagation();
+      let currOpacity = Number(event.target.value) / Number(event.target.max);
+      layers[startIndex + Constants.PRODUCT_LAYERS_ID_MAPPING[pl]].setOpacity(
+        currOpacity
+      );
+    });
+  });
 }
 
 export function regLayerChanges(map) {
@@ -66,7 +94,7 @@ export function regLayerChanges(map) {
     );
 
     let changeLayers = function (event) {
-      let newLayer = loadAndRegisterLayers(id);
+      let newLayer = loadLayers(id);
       map.getLayers().setAt(i + 1, newLayer);
     };
 
@@ -76,14 +104,22 @@ export function regLayerChanges(map) {
   });
 
   let changeAllLayers = function (event) {
-    let layers = initLayers();
-    map.setLayers(layers);
+    let dateTime = document.querySelector(Constants.SELECTORS.DATE);
+    let year = dateTime.getYear();
+    let month = Constants.MONTHMAP[dateTime.getMonth()];
+    let layers = getLayersAtDate(year + month);
+    layers.forEach((layer, i) => map.getLayers().setAt(i + 1, layer));
   };
   /*
   TODO fix the constants Selector - change the constants and replace 
   */
   let dateTime = document.querySelector(Constants.SELECTORS.DATE);
   dateTime.addEventListener("change", changeAllLayers);
+  registerLayerHandlers(
+    map.getLayers().getArray(),
+    Constants.PRODUCT_LAYERS_ID_MAPPING[Constants.SELECTORS.PRODUCT_LAYER_ONE],
+    true
+  );
 }
 
 /**
@@ -91,7 +127,7 @@ export function regLayerChanges(map) {
  * @param {*} pl - the product layer id of the html element
  * @returns layer object
  */
-export function loadAndRegisterLayers(pl, date = null, regEnable = true) {
+export function loadLayers(pl, date = null, regEnable = true) {
   let plElements = {};
   Object.values(Constants.SELECTORS).forEach((selector) => {
     if (
@@ -120,29 +156,7 @@ export function loadAndRegisterLayers(pl, date = null, regEnable = true) {
   console.log(dataURL);
   console.log(legendURL);
   let layer = loadLayer(templateVars.datatype, layerVars, dataURL, legendURL);
-  registerLayer(pl, layer, regEnable);
   return layer;
-}
-
-function registerLayer(pl, layer, regEnable) {
-  //We are reregistering event listeners to new
-  let visible = document.querySelector(pl + " " + Constants.SELECTORS.VISIBLE);
-  let opacity = document.querySelector(pl + " " + Constants.SELECTORS.OPACITY);
-  const newVisible = visible.cloneNode(true);
-  const newOpacity = opacity.cloneNode(true);
-  visible.parentNode.replaceChild(newVisible, visible);
-  opacity.parentNode.replaceChild(newOpacity, opacity);
-  if (regEnable) {
-    newVisible.addEventListener("change", function (event) {
-      event.stopPropagation();
-      layer.setVisible(event.target.checked);
-    });
-  }
-  newOpacity.addEventListener("input", function (event) {
-    event.stopPropagation();
-    let currOpacity = Number(event.target.value) / Number(event.target.max);
-    layer.setOpacity(currOpacity);
-  });
 }
 
 function loadLayer(dataType, layerVars, dataURL, legendURL) {
@@ -176,7 +190,8 @@ function loadLayer(dataType, layerVars, dataURL, legendURL) {
 }
 
 function getElementValues(plElements) {
-  let month = Constants.MONTHMAP[plElements[Constants.SELECTORS.DATE].month];
+  let month =
+    Constants.MONTHMAP[plElements[Constants.SELECTORS.DATE].getMonth()];
   let year = plElements[Constants.SELECTORS.DATE].getYear();
   let day =
     plElements[Constants.SELECTORS.DAY_NIGHT].style.display !==

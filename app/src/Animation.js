@@ -6,7 +6,7 @@ import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
 import Static from "ol/source/ImageStatic.js";
 import { Fill, Stroke, Style } from "ol/style.js";
-import { getLayersAtDate } from "./ProductLayers.js";
+import { getLayersAtDate, registerLayerHandlers } from "./ProductLayers.js";
 import { Control, defaults as defaultControls } from "ol/control.js";
 
 class AnimationService {
@@ -60,6 +60,11 @@ class AnimationService {
 
     this.#updateDates();
     this.#updateProductAnimationLayer();
+    registerLayerHandlers(
+      this.#mapLayers.getArray(),
+      AnimationService.#ANIMATION_MAP_LAYER,
+      false
+    );
     this.#animationDateRange.addEventListener(
       "change",
       this.#updateDates.bind(this)
@@ -99,7 +104,7 @@ class AnimationService {
       }.bind(this)
     );
     this.#animationSpeed.addEventListener(
-      "input",
+      "change",
       function (event) {
         this.#dateIndex = 0;
         this.#enable.dispatchEvent(new Event("change"));
@@ -129,9 +134,12 @@ class AnimationService {
   }
 
   #updateDates() {
-    this.#fromDate.setMaxDate(this.#toDate.monthIndex, this.#toDate.getYear());
+    this.#fromDate.setMaxDate(
+      this.#toDate.getMonthIndex(),
+      this.#toDate.getYear()
+    );
     this.#toDate.setMinDate(
-      this.#fromDate.monthIndex,
+      this.#fromDate.getMonthIndex(),
       this.#fromDate.getYear()
     );
     this.#allDates = this.#constructDateArray();
@@ -145,9 +153,9 @@ class AnimationService {
   #constructDateArray() {
     this.#dateIndex = 0;
     let dates = [];
-    let currMonth = this.#fromDate.monthIndex;
+    let currMonth = this.#fromDate.getMonthIndex();
     let currYear = this.#fromDate.getYear();
-    let maxMonth = this.#toDate.monthIndex;
+    let maxMonth = this.#toDate.getMonthIndex();
     let maxYear = this.#toDate.getYear();
     while (
       currYear < maxYear ||

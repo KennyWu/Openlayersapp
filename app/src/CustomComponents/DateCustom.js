@@ -194,11 +194,11 @@ class DateCustom extends HTMLElement {
     return Number(this.#yearSelector.value);
   }
 
-  get month() {
+  getMonth() {
     return this.#monthSelector.getValue();
   }
 
-  get monthIndex() {
+  getMonthIndex() {
     return this.#monthSelector.getIndex();
   }
 }
