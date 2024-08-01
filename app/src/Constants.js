@@ -148,6 +148,8 @@ export const CONTINENT_VIEWS = {
   },
 };
 
+export const NON_PROPERTIES = new Set(["geometry", "border_color"]);
+
 function fillConstants(variable, name, satellites, hasDayNight) {
   return {
     variable: variable,

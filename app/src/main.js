@@ -87,17 +87,15 @@ function registerMapHandlers() {
     );
 
     if (feature) {
-      //update for dynamic showing - use feature.getKeys() to get names
-      // dynamically show the stuf next time
-      let information = `<p class="pop-info"><strong> Temperature</strong>: ${feature.get(
-        "temperature"
-      )}</p>
-    <p class="pop-info"><strong>Geopotential Height</strong>: ${feature.get(
-      "geopotential_height"
-    )}</p>
-    <p class="pop-info"><strong>Precipitation</strong>: ${feature.get(
-      "precipitation"
-    )}</p>`;
+      let information = '<p class="pop-info">';
+      Object.keys(feature.getProperties()).forEach((key, i) => {
+        if (!Constants.NON_PROPERTIES.has(key)) {
+          information += `<p class="pop-info"><strong>${key}</strong>: ${feature.get(
+            key
+          )}</p>`;
+        }
+      });
+      information += "</p>";
       content.innerHTML = information;
       overlay.setPosition(evt.coordinate);
     } else {
