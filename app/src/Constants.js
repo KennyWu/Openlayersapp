@@ -1,5 +1,5 @@
 export const IMAGE_TEMPLATE_URL =
-  "https://www.star.nesdis.noaa.gov/smcd/emb/land/__products/test/{yyyymm}/{datatype}_{satellite}_{variable}_{yyyymm}_{day[night]}.{fileformat}";
+  "https://www.star.nesdis.noaa.gov/smcd/emb/land/__products/test/monthly/{yyyymm}/{datatype}_{satellite}_{variable}_{yyyymm}_{day[night]}.{fileformat}";
 export const LEGEND_TEMPLATE_URL =
   "./legend/legend_{variable}_{day[night]}.png";
 export const PRODUCT_LAYERS_ID_MAPPING = { "#pl-1": 1, "#pl-2": 2, "#pl-3": 3 };

@@ -15,6 +15,7 @@ const LST_BORDER_STYLE = function (feature) {
   return new Style({
     stroke: new Stroke({
       color: feature.get("border_color") == "red" ? "red" : "blue",
+      width: 2
     }),
     fill: new Fill({
       color: "rgba(255,255, 255, 0.2)",
