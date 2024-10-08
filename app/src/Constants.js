@@ -44,6 +44,7 @@ export const ANOMALYMAPPING = {
   ),
   LST: fillConstants("lst", "LST", [SATELLITE.JPSS, SATELLITE.MODIS], true),
   LST_BORDERS: fillConstants("lsta", "LST Borders", [SATELLITE.JPSS], true),
+  CNY_BORDERS: fillConstants("lsta", "Country Borders", [SATELLITE.JPSS], true),
   LAIA: fillConstants("laia", "LAI Anomaly", [SATELLITE.MODIS], false),
   LAI: fillConstants("lai", "LAI", [SATELLITE.MODIS], false),
   NDVIA: fillConstants("ndvia", "NDVI Anomaly", [SATELLITE.MODIS], false),
@@ -69,7 +70,7 @@ export const ANOMALYMAPPING = {
 };
 
 export const DATATYPE = {
-  BORDERS: "detectionborders",
+  BORDERS: ["detectionborders", "countryborders"],
   IMAGE: "dataimage",
 };
 export const FILEFORMAT = {

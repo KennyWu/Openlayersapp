@@ -162,7 +162,7 @@ export function loadLayers(pl, date = null, regEnable = true) {
 
 function loadLayer(dataType, layerVars, dataURL, legendURL) {
   let layer;
-  if (dataType === Constants.DATATYPE.BORDERS) {
+  if (Constants.DATATYPE.BORDERS.includes(dataType)) {
     layer = new VectorLayer({
       source: new VectorSource({
         url: dataURL,
@@ -203,11 +203,17 @@ function getElementValues(plElements) {
     Number(plElements[Constants.SELECTORS.OPACITY].value) /
     Number(plElements[Constants.SELECTORS.OPACITY].max);
   let visible = plElements[Constants.SELECTORS.VISIBLE].checked;
-  let dataType = plElements[Constants.SELECTORS.PRODUCT_LAYER].value.includes(
-    "Borders"
-  )
-    ? Constants.DATATYPE.BORDERS
-    : Constants.DATATYPE.IMAGE;
+  let value2tmp = plElements[Constants.SELECTORS.PRODUCT_LAYER].value;
+  let dataType;
+  if (value2tmp.includes("Borders")) {
+    if (value2tmp.includes("Country")) {
+      dataType = Constants.DATATYPE.BORDERS[1];
+    } else {
+      dataType = Constants.DATATYPE.BORDERS[0];
+    }
+  } else {
+    dataType = Constants.DATATYPE.IMAGE;
+  }
   let { variable } = Object.values(Constants.ANOMALYMAPPING).find(
     ({ name }) => {
       return plElements[Constants.SELECTORS.PRODUCT_LAYER].value === name;
@@ -215,7 +221,7 @@ function getElementValues(plElements) {
   );
   let yyyymm = year + month;
   let fileformat =
-    dataType === Constants.DATATYPE.BORDERS
+    Constants.DATATYPE.BORDERS.includes(dataType)
       ? Constants.FILEFORMAT.JSON
       : Constants.FILEFORMAT.PNG;
   let satellite = plElements[Constants.SELECTORS.SATELLITE].value;
