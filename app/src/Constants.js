@@ -33,6 +33,7 @@ export const SATELLITE = {
   JPSS: "jpss",
   MODIS: "modis",
   GPM: "gpm",
+  SMAP: "smap",
 };
 
 export const ANOMALYMAPPING = {
@@ -51,22 +52,14 @@ export const ANOMALYMAPPING = {
   NDVI: fillConstants("ndvi", "NDVI", [SATELLITE.MODIS], false),
   ETA: fillConstants("eta", "ET Anomaly", [SATELLITE.MODIS], false),
   ET: fillConstants("et", "ET", [SATELLITE.MODIS], false),
+  SMA: fillConstants("sma", "Soil Moisture Anomaly", [SATELLITE.SMAP], false),
+  SM: fillConstants("sm", "Soil Moisture", [SATELLITE.SMAP], false),
   ALBEDOA: fillConstants("albedoa", "ALBEDO Anomaly", [SATELLITE.MODIS], false),
   ALBEDO: fillConstants("albedo", "ALBEDO", [SATELLITE.MODIS], false),
-  ALBEDO_SFA: fillConstants(
-    "albedo-sfa",
-    "ALBEDO-SF Anomaly",
-    [SATELLITE.MODIS],
-    false
-  ),
+  ALBEDO_SFA: fillConstants("albedo-sfa", "ALBEDO-SF Anomaly", [SATELLITE.MODIS], false),
   ALBEDO_SF: fillConstants("albedo-sf", "ALBEDO-SF", [SATELLITE.MODIS], false),
-  PRCP_GPMA: fillConstants(
-    "prcp-gpma",
-    "PRCP GPM Anomaly",
-    [SATELLITE.GPM],
-    false
-  ),
-  PRCP_GPMA: fillConstants("prcp-gpm", "PRCP GPM", [SATELLITE.GPM], false),
+  PRCP_GPMA: fillConstants("prcp-gpma", "Precipitation Anomaly", [SATELLITE.GPM], false),
+  PRCP_GPM: fillConstants("prcp-gpm", "Precipitation", [SATELLITE.GPM], false),
 };
 
 export const DATATYPE = {
