@@ -208,6 +208,8 @@ function getElementValues(plElements) {
   if (value2tmp.includes("Borders")) {
     if (value2tmp.includes("Country")) {
       dataType = Constants.DATATYPE.BORDERS[1];
+    } else if (value2tmp.includes("State")) {
+      dataType = Constants.DATATYPE.BORDERS[2];
     } else {
       dataType = Constants.DATATYPE.BORDERS[0];
     }
