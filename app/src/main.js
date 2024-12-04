@@ -16,9 +16,16 @@ import { initAnimationService } from "./Animation.js";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -110, 180, 110];
-const container = document.getElementById("popup");
-const content = document.getElementById("popup-content");
-const closer = document.getElementById("popup-closer");
+const containerInfo = document.getElementById("popup");
+const contentInfo = document.getElementById("popup-content");
+const closerInfo = document.getElementById("popup-closer");
+const containerPlt = document.getElementById("popup-barplt");
+const contentPlt = document.getElementById("popup-content-barplt");
+const closerPlt = document.getElementById("popup-closer-barplt");
+closerPlt.onclick = () => {
+  containerPlt.style.display = "none";
+};
+
 const view = new View({
   projection: "EPSG:4326",
   extent: extent,
@@ -26,8 +33,9 @@ const view = new View({
   zoom: 2,
   maxZoom: 8,
 });
-const overlay = new Overlay({
-  element: container,
+
+const overlayInfo = new Overlay({
+  element: containerInfo,
   autoPan: {
     animation: {
       duration: 250,
@@ -40,12 +48,10 @@ let newAttribution = new Attribution({
   collapsible: false,
   collapsed: false,
 });
-let intervalID = 0;
-let animateIndex = 1;
 
 function main() {
   map = new Map({
-    overlays: [overlay],
+    overlays: [overlayInfo],
     controls: init_controls(),
     target: "map",
     view: view,
@@ -54,6 +60,7 @@ function main() {
   ProductLayers.regLayerChanges(map);
   changeContinentSelectMode();
   registerMapHandlers();
+  ProductLayers.registerOverlayHandlers(onDisplayPlt);
   registerViewHandlers(map);
   initAnimationService(map);
 }
@@ -77,6 +84,11 @@ function init_controls() {
   return control;
 }
 
+function onDisplayPlt(posUrl, negUrl) {
+  contentPlt.innerHTML = `<img class="plt-img" src="${posUrl}"></img> <img class="plt-img" src="${negUrl}"></img>`;
+  containerPlt.style.display = "block";
+}
+
 function registerMapHandlers() {
   map.on("singleclick", function (evt) {
     let feature = map.forEachFeatureAtPixel(
@@ -96,16 +108,16 @@ function registerMapHandlers() {
         }
       });
       information += "</p>";
-      content.innerHTML = information;
-      overlay.setPosition(evt.coordinate);
+      contentInfo.innerHTML = information;
+      overlayInfo.setPosition(evt.coordinate);
     } else {
-      overlay.setPosition(undefined);
+      overlayInfo.setPosition(undefined);
     }
   });
 
-  closer.onclick = function () {
-    overlay.setPosition(undefined);
-    closer.blur();
+  closerInfo.onclick = function () {
+    overlayInfo.setPosition(undefined);
+    closerInfo.blur();
     return false;
   };
 }

@@ -1,5 +1,7 @@
 export const IMAGE_TEMPLATE_URL =
   "https://www.star.nesdis.noaa.gov/smcd/emb/land/__products/test/monthly/{yyyymm}/{datatype}_{satellite}_{variable}_{yyyymm}_{day[night]}.{fileformat}";
+export const PLT_TEMPLATE_URL =
+  "https://www.star.nesdis.noaa.gov/smcd/emb/land/__products/test/monthly/{yyyymm}/{datatype}_{temperatureState}_{variable}_{bordertype}_{yyyymm}_{day[night]}.png";
 export const LEGEND_TEMPLATE_URL =
   "./legend/legend_{variable}_{day[night]}.png";
 export const PRODUCT_LAYERS_ID_MAPPING = { "#pl-1": 1, "#pl-2": 2, "#pl-3": 3 };
@@ -11,7 +13,8 @@ export const ANIMATE_PRODUCT_LAYER_ENABLE = [
 export const SELECTORS = {
   DAY_NIGHT: ".day-night-selector",
   OPACITY: ".opacity",
-  PRODUCT_LAYER: ".product-layer-type",
+  PRODUCT_LAYER_TYPE: ".product-layer-type",
+  PRODUCT_LAYER: ".product-layer",
   VISIBLE: ".visible",
   DATE: "#date",
   SATELLITE: ".satellite",
@@ -27,6 +30,15 @@ export const SELECTORS = {
   ANIMATION_DATE_RANGE: "#animation-date-range",
   ANIMATION_CONFIGURE: "#animation-configure",
   ANIMATION_PRODUCT_LAYER: "#animation-product-layer",
+  BAR_PLOT: ".btn-plot",
+  BORDERS: ".border-selector",
+};
+
+export const DATATYPE = {
+  // BORDERS: ["detectionborders", "countryborders", "stateborders"],
+  DETECTION_BORDERS: "detectionborders",
+  BORDERS: "{bordertype}borders",
+  IMAGE: "dataimage",
 };
 
 export const SATELLITE = {
@@ -44,9 +56,22 @@ export const ANOMALYMAPPING = {
     true
   ),
   LST: fillConstants("lst", "LST", [SATELLITE.JPSS, SATELLITE.MODIS], true),
-  LST_BORDERS: fillConstants("lsta", "LST Borders", [SATELLITE.JPSS], true),
-  CNY_BORDERS: fillConstants("lsta", "Country Borders", [SATELLITE.JPSS], true),
-  STT_BORDERS: fillConstants("lsta", "State Borders", [SATELLITE.JPSS], true),
+  LST_BORDERS: fillConstants(
+    "lsta",
+    "LST Borders",
+    [SATELLITE.JPSS],
+    true,
+    DATATYPE.DETECTION_BORDERS,
+    false
+  ),
+  BORDERS: fillConstants(
+    "lsta",
+    "Borders",
+    [SATELLITE.JPSS],
+    true,
+    DATATYPE.BORDERS,
+    true
+  ),
   LAIA: fillConstants("laia", "LAI Anomaly", [SATELLITE.MODIS], false),
   LAI: fillConstants("lai", "LAI", [SATELLITE.MODIS], false),
   NDVIA: fillConstants("ndvia", "NDVI Anomaly", [SATELLITE.MODIS], false),
@@ -57,16 +82,22 @@ export const ANOMALYMAPPING = {
   SM: fillConstants("sm", "Soil Moisture", [SATELLITE.SMAP], false),
   ALBEDOA: fillConstants("albedoa", "ALBEDO Anomaly", [SATELLITE.MODIS], false),
   ALBEDO: fillConstants("albedo", "ALBEDO", [SATELLITE.MODIS], false),
-  ALBEDO_SFA: fillConstants("albedo-sfa", "ALBEDO-SF Anomaly", [SATELLITE.MODIS], false),
+  ALBEDO_SFA: fillConstants(
+    "albedo-sfa",
+    "ALBEDO-SF Anomaly",
+    [SATELLITE.MODIS],
+    false
+  ),
   ALBEDO_SF: fillConstants("albedo-sf", "ALBEDO-SF", [SATELLITE.MODIS], false),
-  PRCP_GPMA: fillConstants("prcp-gpma", "Precipitation Anomaly", [SATELLITE.GPM], false),
+  PRCP_GPMA: fillConstants(
+    "prcp-gpma",
+    "Precipitation Anomaly",
+    [SATELLITE.GPM],
+    false
+  ),
   PRCP_GPM: fillConstants("prcp-gpm", "Precipitation", [SATELLITE.GPM], false),
 };
 
-export const DATATYPE = {
-  BORDERS: ["detectionborders", "countryborders", "stateborders"],
-  IMAGE: "dataimage",
-};
 export const FILEFORMAT = {
   JSON: "json",
   PNG: "png",
@@ -106,7 +137,15 @@ export const monthNames = [
   "December",
 ];
 
-export const CONTINENTS = ["Global", "Africa", "Asia", "Europe", "N_America", "Oceania", "S_America"];
+export const CONTINENTS = [
+  "Global",
+  "Africa",
+  "Asia",
+  "Europe",
+  "N_America",
+  "Oceania",
+  "S_America",
+];
 
 export const CONTINENT_VIEWS = {
   Global: {
@@ -145,12 +184,21 @@ export const CONTINENT_VIEWS = {
 
 export const NON_PROPERTIES = new Set(["geometry", "border_color"]);
 
-function fillConstants(variable, name, satellites, hasDayNight) {
+function fillConstants(
+  variable,
+  name,
+  satellites,
+  hasDayNight,
+  dataType = DATATYPE.IMAGE,
+  hasBorderOption = false
+) {
   return {
     variable: variable,
     name: name,
     satellites: satellites,
     hasDayNight: hasDayNight,
+    dataType: dataType,
+    hasBorderOption: hasBorderOption,
   };
 }
 

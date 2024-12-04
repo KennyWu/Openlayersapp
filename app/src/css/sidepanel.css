@@ -96,7 +96,7 @@ td {
 }
 
 .non-product-option .btn-collapse,
-.product-layer button,
+.product-layer .header button,
 .product-layer .show {
   border-style: none;
   padding: 0px;
@@ -105,7 +105,13 @@ td {
   font-weight: bold;
 }
 
-.product-layer button {
+.btn-plot {
+  padding: 1px 5px 1px 5px;
+  font-size: smaller;
+  width: 100%;
+}
+
+.product-layer .header button {
   padding: 0px 0px 0px 0px;
 }
 

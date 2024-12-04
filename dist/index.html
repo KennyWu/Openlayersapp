@@ -6,8 +6,8 @@
   <link rel="icon" type="image/x-icon" href="./logo/noaa.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NOAA Map Services</title>
-  <script type="module" crossorigin src="./assets/index-rxfZQkdn.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-OoxpFAfB.css">
+  <script type="module" crossorigin src="./assets/index-5catXMe7.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-dawhQ-k5.css">
 </head>
 
 <body>
@@ -68,7 +68,9 @@
               <div class="pl-dropdown">
                 <select class="form-control form-control-sm satellite"></select>
                 <select class="form-control form-control-sm day-night-selector"></select>
+                <select class="form-control form-control-sm border-selector"></select>
               </div>
+              <button type="button" class="btn btn-light btn-plot">Display Bar Plots</button>
               <label>
                 Opacity
                 <input type="range" class="form-range opacity" value="100" min="0" max="100" step="1" />
@@ -89,7 +91,9 @@
               <div class="pl-dropdown">
                 <select class="form-control form-control-sm satellite"></select>
                 <select class="form-control form-control-sm day-night-selector"></select>
+                <select class="form-control form-control-sm border-selector"></select>
               </div>
+              <button type="button" class="btn btn-light btn-plot">Display Bar Plots</button>
               <label>
                 Opacity
                 <input type="range" class="form-range opacity" value="100" min="0" max="100" step="1" class="opacity" />
@@ -110,7 +114,9 @@
               <div class="pl-dropdown">
                 <select class="form-control form-control-sm satellite"></select>
                 <select class="form-control form-control-sm day-night-selector"></select>
+                <select class="form-control form-control-sm border-selector"></select>
               </div>
+              <button type="button" class="btn btn-light btn-plot">Display Bar Plots</button>
               <label>
                 Opacity
                 <input type="range" class="form-range opacity" value="100" min="0" max="100" step="1" class="opacity" />
@@ -126,6 +132,10 @@
     <div id="popup" class="ol-popup">
       <a href="#" id="popup-closer" class="ol-popup-closer"></a>
       <div id="popup-content"></div>
+    </div>
+    <div id="popup-barplt">
+      <a href="#" id="popup-closer-barplt" class="ol-popup-closer"></a>
+      <div id="popup-content-barplt"></div>
     </div>
   </div>
 </body>
