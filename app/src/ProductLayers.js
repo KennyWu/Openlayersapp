@@ -273,7 +273,7 @@ function getElementValues(plElements) {
   }
   let yyyymm = year + month;
   let fileformat =
-    Constants.DATATYPE.DATATYPE == dataType
+    dataType == Constants.DATATYPE.IMAGE
       ? Constants.FILEFORMAT.PNG
       : Constants.FILEFORMAT.JSON;
   let satellite = plElements[Constants.SELECTORS.SATELLITE].value;

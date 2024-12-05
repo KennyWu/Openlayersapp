@@ -115,8 +115,10 @@ body {
 }
 
 .plt-img {
-  border: 5px solid black;
+  border: 0px solid black;
   max-width: 90%;
+  display: block; /* Ensure it's treated as a block-level element */
+  margin: 0 auto;
 }
 
 .legend {
