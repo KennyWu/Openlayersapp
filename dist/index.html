@@ -78,7 +78,13 @@
             </div>
           </div>
         </div>
-        <div class="product-layer container" id="pl-2">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkbox = document.querySelector('.visible');
+      checkbox.checked = true; // Ensure checkbox is checked
+    });
+  </script>
+  	<div class="product-layer container" id="pl-2">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-2">
               + Layer 2
@@ -101,7 +107,22 @@
             </div>
           </div>
         </div>
-        <div class="product-layer container" id="pl-3">
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set "LST Borders" as the selected option in the product-layer-type dropdown
+    const layerTypeSelect = document.querySelector('#pl-2 .product-layer-type');
+    layerTypeSelect.value = 'LST Borders';
+    // Hide the satellite dropdown
+    const satelliteSelector = document.querySelector('#pl-2 .satellite');
+    satelliteSelector.style.display = 'none';
+    // Set "day" as the selected option in the day-night-selector dropdown
+    const dayNightSelect = document.querySelector('#pl-2 .day-night-selector');
+    dayNightSelect.value = 'day';
+    const checkbox = document.querySelector('#pl-2 .visible');
+    checkbox.checked = true; // Ensure checkbox is checked
+    });
+</script>
+	<div class="product-layer container" id="pl-3">
           <span class="header"><button class="btn-collapse" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapisble-layer-3">
               + Layer 3
