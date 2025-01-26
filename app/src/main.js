@@ -15,7 +15,7 @@ import { createXYDirString, fillStringTemplate } from "./util.js";
 import { initAnimationService } from "./Animation.js";
 
 const currProj = "ESPG:4326";
-const extent = [-180, -110, 180, 110];
+const extent = [-180, -125, 180, 125];
 const containerInfo = document.getElementById("popup");
 const contentInfo = document.getElementById("popup-content");
 const closerInfo = document.getElementById("popup-closer");
