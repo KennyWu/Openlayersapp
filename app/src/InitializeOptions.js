@@ -48,8 +48,17 @@ function main() {
       x.dispatchEvent(event);
     });
   document.querySelector(Constants.SELECTORS.ENABLE_ANIMATE).checked = false;
-  document.querySelectorAll(Constants.SELECTORS.VISIBLE).forEach((x) => {
-    x.checked = false;
+  document.querySelectorAll(Constants.SELECTORS.PRODUCT_LAYER).forEach((x) => {
+    const visible = x.querySelector(Constants.SELECTORS.VISIBLE);
+    const selectedEle = x.querySelector(Constants.SELECTORS.PRODUCT_LAYER_TYPE);
+    Constants.DEFAULT_OPTION_PRODUCT.forEach(({ id, layer, show }) => {
+      if (id.slice(1) === x.id) {
+        visible.checked = show;
+        selectedEle.value = layer;
+        let event = new Event("change");
+        x.dispatchEvent(event);
+      }
+    });
   });
 }
 

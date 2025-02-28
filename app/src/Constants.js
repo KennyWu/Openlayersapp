@@ -32,6 +32,7 @@ export const SELECTORS = {
   ANIMATION_PRODUCT_LAYER: "#animation-product-layer",
   BAR_PLOT: ".btn-plot",
   BORDERS: ".border-selector",
+  VIEW_3D: "#view-3d",
 };
 
 export const DATATYPE = {
@@ -201,6 +202,24 @@ function fillConstants(
     hasBorderOption: hasBorderOption,
   };
 }
+
+export const DEFAULT_OPTION_PRODUCT = [
+  {
+    id: SELECTORS.PRODUCT_LAYER_ONE,
+    layer: ANOMALYMAPPING.LSTA.name,
+    show: true,
+  },
+  {
+    id: SELECTORS.PRODUCT_LAYER_TWO,
+    layer: ANOMALYMAPPING.LST_BORDERS.name,
+    show: true,
+  },
+  {
+    id: SELECTORS.PRODUCT_LAYER_THREE,
+    layer: ANOMALYMAPPING.LSTA.name,
+    show: false,
+  },
+];
 
 export const MIN_YEAR_LOOKBACK = 2014;
 export const LOOP_END_BEGIN_EVENT = "Loop-end-begin";

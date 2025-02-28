@@ -13,6 +13,7 @@ import * as Constants from "./Constants.js";
 import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
 import { initAnimationService } from "./Animation.js";
+import OLCesium from "olcs";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -125, 180, 125];
@@ -57,11 +58,13 @@ function main() {
     view: view,
   });
   map.setLayers(ProductLayers.initLayers());
+  const ol3d = new OLCesium({ map: map });
+  ProductLayers.regLayerChanges(map);
   ProductLayers.regLayerChanges(map);
   changeContinentSelectMode();
   registerMapHandlers();
   ProductLayers.registerOverlayHandlers(onDisplayPlt);
-  registerViewHandlers(map);
+  registerViewHandlers(map, ol3d);
   initAnimationService(map);
 }
 
@@ -126,7 +129,7 @@ function changeContinentSelectMode() {
   document.querySelector(Constants.SELECTORS.CONTINENTS).regularSelectMode();
 }
 
-function registerViewHandlers() {
+function registerViewHandlers(map, ol3d) {
   document
     .querySelector(Constants.SELECTORS.CONTINENTS)
     .addEventListener("change", (event) => {
@@ -136,6 +139,14 @@ function registerViewHandlers() {
       view.setCenter(newCenter);
       view.setZoom(newZoom);
     });
+
+  document
+    .querySelector(Constants.SELECTORS.VIEW_3D)
+    .addEventListener("change", (event) => {
+      ol3d.setEnabled(event.target.checked);
+    });
+  const e = new Event("change");
+  document.querySelector(Constants.SELECTORS.VIEW_3D).dispatchEvent(e);
 }
 
 window.onload = main;
