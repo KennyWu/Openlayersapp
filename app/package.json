@@ -15,6 +15,7 @@
     "@fortawesome/fontawesome-free": "^6.5.2",
     "bootstrap": "^5.3.3",
     "ol": "latest",
+    "ol-cesium": "^2.17.0",
     "olcs": "^2.22.1"
   }
 }
