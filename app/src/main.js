@@ -14,6 +14,8 @@ import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
 import { initAnimationService } from "./Animation.js";
 import OLCesium from "olcs";
+import { VectorSynchronizer } from "olcs";
+import { Viewer } from "cesium";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -125, 180, 125];
@@ -52,14 +54,15 @@ let newAttribution = new Attribution({
 
 function main() {
   map = new Map({
+    // interactions: interactionDefaults().extend([dragAndDropInteraction])
     overlays: [overlayInfo],
     controls: init_controls(),
     target: "map",
     view: view,
   });
   map.setLayers(ProductLayers.initLayers());
-  const ol3d = new OLCesium({ map: map });
-  ProductLayers.regLayerChanges(map);
+  // const viewer = new Viewer("map", {});
+  const ol3d = new OLCesium({ map: map, target: "map" });
   ProductLayers.regLayerChanges(map);
   changeContinentSelectMode();
   registerMapHandlers();
