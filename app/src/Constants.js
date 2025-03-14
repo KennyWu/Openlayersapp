@@ -47,32 +47,14 @@ export const SATELLITE = {
   MODIS: "modis",
   GPM: "gpm",
   SMAP: "smap",
+  ECMWF: "ecmwf",
 };
 
 export const ANOMALYMAPPING = {
-  LSTA: fillConstants(
-    "lsta",
-    "LST Anomaly",
-    [SATELLITE.JPSS, SATELLITE.MODIS],
-    true
-  ),
+  LSTA: fillConstants("lsta", "LST Anomaly", [SATELLITE.JPSS, SATELLITE.MODIS], true),
   LST: fillConstants("lst", "LST", [SATELLITE.JPSS, SATELLITE.MODIS], true),
-  LST_BORDERS: fillConstants(
-    "lsta",
-    "LST Borders",
-    [SATELLITE.JPSS],
-    true,
-    DATATYPE.DETECTION_BORDERS,
-    false
-  ),
-  BORDERS: fillConstants(
-    "lsta",
-    "Borders",
-    [SATELLITE.JPSS],
-    true,
-    DATATYPE.BORDERS,
-    true
-  ),
+  LST_BORDERS: fillConstants("lsta", "LST Borders", [SATELLITE.JPSS], true, DATATYPE.DETECTION_BORDERS, false),
+  BORDERS: fillConstants("lsta", "Borders", [SATELLITE.JPSS], true, DATATYPE.BORDERS, true),
   LAIA: fillConstants("laia", "LAI Anomaly", [SATELLITE.MODIS], false),
   LAI: fillConstants("lai", "LAI", [SATELLITE.MODIS], false),
   NDVIA: fillConstants("ndvia", "NDVI Anomaly", [SATELLITE.MODIS], false),
@@ -83,21 +65,21 @@ export const ANOMALYMAPPING = {
   SM: fillConstants("sm", "Soil Moisture", [SATELLITE.SMAP], false),
   ALBEDOA: fillConstants("albedoa", "ALBEDO Anomaly", [SATELLITE.MODIS], false),
   ALBEDO: fillConstants("albedo", "ALBEDO", [SATELLITE.MODIS], false),
-  ALBEDO_SFA: fillConstants(
-    "albedo-sfa",
-    "ALBEDO-SF Anomaly",
-    [SATELLITE.MODIS],
-    false
-  ),
+  ALBEDO_SFA: fillConstants("albedo-sfa", "ALBEDO-SF Anomaly", [SATELLITE.MODIS], false),
   ALBEDO_SF: fillConstants("albedo-sf", "ALBEDO-SF", [SATELLITE.MODIS], false),
-  PRCP_GPMA: fillConstants(
-    "prcp-gpma",
-    "Precipitation Anomaly",
-    [SATELLITE.GPM],
-    false
-  ),
+  PRCP_GPMA: fillConstants("prcp-gpma", "Precipitation Anomaly",[SATELLITE.GPM], false),
   PRCP_GPM: fillConstants("prcp-gpm", "Precipitation", [SATELLITE.GPM], false),
-};
+  AIRTA: fillConstants("airta", "2m_Air_T Anomaly", [SATELLITE.ECMWF], false),
+  AIRT: fillConstants("airt", "2m_Air_T", [SATELLITE.ECMWF], false),
+  DPTA: fillConstants("dpta", "2m_DewP_T Anomaly", [SATELLITE.ECMWF], false),
+  DPT: fillConstants("dpt", "2m_DewP_T", [SATELLITE.ECMWF], false),
+  PRESA: fillConstants("presa", "Surf_P Anomaly", [SATELLITE.ECMWF], false),
+  PRES: fillConstants("pres", "Surf_P", [SATELLITE.ECMWF], false),
+  U10MA: fillConstants("u10ma", "10m_U Anomaly", [SATELLITE.ECMWF], false),
+  U10M: fillConstants("u10m", "10m_U", [SATELLITE.ECMWF], false),
+  V10MA: fillConstants("v10ma", "10m_V Anomaly", [SATELLITE.ECMWF], false),
+  V10M: fillConstants("v10m", "10m_V", [SATELLITE.ECMWF], false),
+}
 
 export const FILEFORMAT = {
   JSON: "json",
