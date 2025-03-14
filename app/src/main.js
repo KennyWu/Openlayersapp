@@ -16,6 +16,7 @@ import { initAnimationService } from "./Animation.js";
 import OLCesium from "olcs";
 import { VectorSynchronizer } from "olcs";
 import { Viewer } from "cesium";
+import MapOverlay from "./Overlay.js";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -125, 180, 125];
@@ -37,14 +38,6 @@ const view = new View({
   maxZoom: 8,
 });
 
-const overlayInfo = new Overlay({
-  element: containerInfo,
-  autoPan: {
-    animation: {
-      duration: 250,
-    },
-  },
-});
 let map = null;
 
 let newAttribution = new Attribution({
@@ -55,7 +48,7 @@ let newAttribution = new Attribution({
 function main() {
   map = new Map({
     // interactions: interactionDefaults().extend([dragAndDropInteraction])
-    overlays: [overlayInfo],
+    // overlays: [overlayInfo],
     controls: init_controls(),
     target: "map",
     view: view,
@@ -63,9 +56,10 @@ function main() {
   map.setLayers(ProductLayers.initLayers());
   // const viewer = new Viewer("map", {});
   const ol3d = new OLCesium({ map: map, target: "map" });
+  const overlay = new MapOverlay(map, ol3d, ol3d.getCesiumScene());
   ProductLayers.regLayerChanges(map);
   changeContinentSelectMode();
-  registerMapHandlers();
+  // registerMapHandlers();
   ProductLayers.registerOverlayHandlers(onDisplayPlt);
   registerViewHandlers(map, ol3d);
   initAnimationService(map);
@@ -93,39 +87,6 @@ function init_controls() {
 function onDisplayPlt(posUrl, negUrl) {
   contentPlt.innerHTML = `<img class="plt-img" src="${posUrl}"></img> <img class="plt-img" src="${negUrl}"></img>`;
   containerPlt.style.display = "block";
-}
-
-function registerMapHandlers() {
-  map.on("singleclick", function (evt) {
-    let feature = map.forEachFeatureAtPixel(
-      evt.pixel,
-      function (feature, layer) {
-        return feature;
-      }
-    );
-
-    if (feature) {
-      let information = '<p class="pop-info">';
-      Object.keys(feature.getProperties()).forEach((key, i) => {
-        if (!Constants.NON_PROPERTIES.has(key)) {
-          information += `<p class="pop-info"><strong>${key}</strong>: ${feature.get(
-            key
-          )}</p>`;
-        }
-      });
-      information += "</p>";
-      contentInfo.innerHTML = information;
-      overlayInfo.setPosition(evt.coordinate);
-    } else {
-      overlayInfo.setPosition(undefined);
-    }
-  });
-
-  closerInfo.onclick = function () {
-    overlayInfo.setPosition(undefined);
-    closerInfo.blur();
-    return false;
-  };
 }
 
 function changeContinentSelectMode() {
