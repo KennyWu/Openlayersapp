@@ -100,7 +100,6 @@ body {
 
 #popup-barplt {
   display: none;
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -112,13 +111,17 @@ body {
   border: 1px solid #cccccc;
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
   z-index: 9;
+  width: 70%;
+  height: 80%;
+}
+
+#popup-content-barplt {
+  width: 100%;
 }
 
 .plt-img {
   border: 0px solid black;
-  max-width: 90%;
-  display: block; /* Ensure it's treated as a block-level element */
-  margin: 0 auto;
+  max-width: 60%; /* Ensure it's treated as a block-level element */
 }
 
 .legend {
