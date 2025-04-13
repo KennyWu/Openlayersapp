@@ -17,6 +17,8 @@ import OLCesium from "olcs";
 import { VectorSynchronizer } from "olcs";
 import { Viewer } from "cesium";
 import MapOverlay from "./Overlay.js";
+import { renderLegend } from "./Layers.js";
+import "./Draggable.js";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -125, 180, 125];
@@ -30,6 +32,12 @@ closerPlt.onclick = () => {
   containerPlt.style.display = "none";
 };
 
+let newAttribution = new Attribution({
+  className: "ol-attribution",
+  collapsible: false,
+  collapsed: false,
+});
+
 const view = new View({
   projection: "EPSG:4326",
   extent: extent,
@@ -40,11 +48,6 @@ const view = new View({
 
 let map = null;
 
-let newAttribution = new Attribution({
-  collapsible: false,
-  collapsed: false,
-});
-
 function main() {
   map = new Map({
     // interactions: interactionDefaults().extend([dragAndDropInteraction])
@@ -54,6 +57,7 @@ function main() {
     view: view,
   });
   map.setLayers(ProductLayers.initLayers());
+  renderLegend(map.getLayers().getArray());
   // const viewer = new Viewer("map", {});
   const ol3d = new OLCesium({ map: map, target: "map" });
   const overlay = new MapOverlay(map, ol3d, ol3d.getCesiumScene());
@@ -66,9 +70,9 @@ function main() {
 }
 
 function init_controls() {
-  let control = defaultControls();
-  control.pop();
-  control.push(newAttribution);
+  let control = defaultControls({ attribution: false });
+  // control.pop();
+  // control.push(newAttribution);
   control.push(
     new FullScreen({
       source: document.getElementById("screen"),

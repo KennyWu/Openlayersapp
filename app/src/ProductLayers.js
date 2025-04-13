@@ -8,6 +8,7 @@ import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import { fillStringTemplate } from "./util";
 import * as Constants from "./Constants.js";
+import renderLayers from "./Layers.js";
 
 const CURRPROJ = "ESPG:4326";
 const EXTENT = [-180, -90, 180, 90];
@@ -107,7 +108,9 @@ export function registerLayerHandlers(layers, startIndex, enableVisible) {
     if (enableVisible) {
       visible.addEventListener("change", function (event) {
         event.stopPropagation();
-        layers[startIndex + Constants.PRODUCT_LAYERS_ID_MAPPING[pl]].setVisible(
+        renderLayers(
+          layers,
+          startIndex + Constants.PRODUCT_LAYERS_ID_MAPPING[pl],
           event.target.checked
         );
       });
@@ -140,8 +143,12 @@ export function regLayerChanges(map) {
     );
 
     let changeLayers = function (event) {
+      const show = document.querySelector(
+        id + " " + Constants.SELECTORS.VISIBLE
+      ).checked;
       let newLayer = loadLayers(id);
       map.getLayers().setAt(i + 1, newLayer);
+      renderLayers(map.getLayers().getArray(), i + 1, show);
     };
 
     productType.addEventListener("change", changeLayers);
