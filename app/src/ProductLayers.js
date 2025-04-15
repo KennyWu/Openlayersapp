@@ -79,7 +79,7 @@ export function registerOverlayHandlers(displayPltFunc) {
 
         const [templateVars, layerVars] = getElementValues(plElements);
         templateVars.datatype = "bplot";
-        templateVars["day[night]"] = "day";
+        ///templateVars["day[night]"] = "day";
         let dataPosURL = fillStringTemplate(Constants.PLT_TEMPLATE_URL, {
           ...templateVars,
           temperatureState: "positive",
