@@ -117,7 +117,6 @@ class AnimationService {
     this.#updateVisbility();
     this.#intervalID = setInterval(
       function () {
-        console.log(this.#mapLayers.getArray()[4].getSource().url_);
         this.#dateIndex =
           this.#dateIndex + 1 == this.#allDates.length
             ? 0
@@ -135,14 +134,10 @@ class AnimationService {
   }
 
   #updateDates() {
-    this.#fromDate.setMaxDate(
-      this.#toDate.getMonthIndex(),
-      this.#toDate.getYear()
-    );
-    this.#toDate.setMinDate(
-      this.#fromDate.getMonthIndex(),
-      this.#fromDate.getYear()
-    );
+    let fromDateObj = this.#fromDate.getDateObj();
+    let toDateObj = this.#toDate.getDateObj();
+    this.#fromDate.setMaxDate(toDateObj);
+    this.#toDate.setMinDate(fromDateObj);
     this.#allDates = this.#constructDateArray();
     this.#updateProductAnimationLayer();
   }
@@ -154,22 +149,14 @@ class AnimationService {
   #constructDateArray() {
     this.#dateIndex = 0;
     let dates = [];
-    let currMonth = this.#fromDate.getMonthIndex();
-    let currYear = this.#fromDate.getYear();
-    let maxMonth = this.#toDate.getMonthIndex();
-    let maxYear = this.#toDate.getYear();
-    while (
-      currYear < maxYear ||
-      (currYear == maxYear && currMonth <= maxMonth)
-    ) {
-      let monthString = Constants.MONTHMAP[Constants.monthNames[currMonth]];
-      let yearString = String(currYear);
+    let currDate = this.#fromDate.getDateObj();
+    let toDate = this.#toDate.getDateObj();
+    while (currDate <= toDate) {
+      let monthString =
+        Constants.MONTHMAP[Constants.monthNames[currDate.getMonth()]];
+      let yearString = String(currDate.getFullYear());
       dates.push({ monthString: monthString, yearString: yearString });
-      currMonth += 1;
-      if (currMonth >= Constants.monthNames.length) {
-        currMonth = 0;
-        currYear += 1;
-      }
+      currDate.setMonth(currDate.getMonth() + 1);
     }
 
     return dates;

@@ -233,7 +233,15 @@ export const DEFAULT_OPTION_PRODUCT = [
   },
 ];
 
+export const FORWARD = "forward-change";
+export const BACKWARD = "backward-change";
 export const MIN_YEAR_LOOKBACK = 2014;
+const CURRENT_YEAR = Number(new Date().getFullYear());
+let year_range = [];
+for (let i = MIN_YEAR_LOOKBACK; i <= CURRENT_YEAR; i++) {
+  year_range.push(i);
+}
+export const VALID_YEARS_RANGE = year_range;
 export const LOOP_END_BEGIN_EVENT = "Loop-end-begin";
 export const LOOP_BEGIN_END_EVENT = "Loop-begin-end";
 
